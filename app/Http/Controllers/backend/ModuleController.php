@@ -34,7 +34,6 @@ class ModuleController extends Controller
         $role = Role::all();
         return view('backend.module.create', compact('role'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -45,7 +44,7 @@ class ModuleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'module_key' => 'required',
+            'module_key' => 'required|unique:modules',
             'module_url' => 'required',
             'module_rank' => 'required',
         ]);
@@ -70,7 +69,6 @@ class ModuleController extends Controller
             return redirect()->route('module.create')->with('error_message', 'You con not create rignt now');
         }
     }
-
     /**
      * Display the specified resource.
      *
@@ -81,7 +79,6 @@ class ModuleController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -90,9 +87,10 @@ class ModuleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $module = Module::find($id);
+        $role = Role::all();
+        return view('backend.module.edit',compact('module','role'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -102,7 +100,7 @@ class ModuleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       print_r($_POST);
     }
 
     /**

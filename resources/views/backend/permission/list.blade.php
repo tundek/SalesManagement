@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    Role Listing Page
+    Permission Listing Page
 @endsection
 @section('css')
 
@@ -11,7 +11,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Role Management</h3>
+                    <h3>Permission Management</h3>
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -38,7 +38,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Listing Role</h2>
+                            <h2>Listing Permission</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -77,7 +77,7 @@
                                         <td> {{$m->permission_key}}</td>
                                         <td> {{$m->created_at}}</td>
                                         <td> {{$m->updated_at}}</td>
-                                        <td><a href="{{route('permission.edit',$m->id)}}" class="btn btn-info"><i class="fa fa-pencil"></i>Edit</a>
+                                        <td><a href="{{route('permission.edit',$m->id)}}" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
                                            <form action="{{route('permission.delete',$m->id)}}" method="post">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 {{ csrf_field()}}

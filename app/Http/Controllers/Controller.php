@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     function checkpermission($permission)
     {
         $user = Auth::user();
@@ -23,7 +24,7 @@ class Controller extends BaseController
             }
         }
         if ($access == false) {
-            return \Redirect::to('dashboard-panel')->send()->with('error_message', 'You Have No Permission For Access This Route So, Do Not Try UnEhical Activity');
+            return \Redirect::to('dashboard-panel')->send()->with('error_message', 'You Have No Permission For Access This Route');
         }
     }
 }

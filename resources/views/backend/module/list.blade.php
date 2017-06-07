@@ -87,7 +87,7 @@
                                         </td>
                                         <td> {{$m->created_at}}</td>
                                         <td> {{$m->updated_at}}</td>
-                                        <td><a href="" class="btn btn-info "><i class="fa fa-pencil"></i>Change</a>
+                                        <td><a href="{{route('module.edit',$m->id)}}" class="btn btn-info "><i class="fa fa-pencil"></i> Edit</a>
                                             <form action="" method="post">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 {{ csrf_field()}}

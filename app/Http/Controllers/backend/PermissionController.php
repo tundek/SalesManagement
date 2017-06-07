@@ -17,7 +17,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $this->checkpermission('permission-list');
+        //$this->checkpermission('permission-list');
         $permission = Permission::all();
         return view('backend.permission.list', compact('permission','check'));
     }
@@ -29,7 +29,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        $this->checkpermission('permission-create');
+        //$this->checkpermission('permission-create');
         return view('backend.permission.create');
     }
 
@@ -43,7 +43,7 @@ class PermissionController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'permission_key' => 'required'
+            'permission_key' => 'required|unique:permissions'
         ]);
         $message = Permission::create([
             'name' => $request->name,
@@ -76,7 +76,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        $this->checkpermission('permission-edit');
+        //$this->checkpermission('permission-edit');
         $permission = Permission::find($id);
         return view('backend.permission.edit', compact('permission'));
     }
@@ -92,7 +92,7 @@ class PermissionController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'permission_key' => 'required',
+            'permission_key' => 'required|unique:permissions',
         ]);
 
         $permission = Permission::find($id);
@@ -115,7 +115,7 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        $this->checkpermission('permission-delete');
+        //$this->checkpermission('permission-delete');
         $permisison = Permission::find($id);
         $permisison->delete();
         return redirect()->route('permission.list')->with('success_message', 'successfully deleted');
@@ -125,7 +125,7 @@ class PermissionController extends Controller
 
     public function asign($id)
     {
-        $this->checkpermission('permission-asign');
+        //$this->checkpermission('permission-asign');
 
         $roledetails = Role::find($id);
         $permission = Permission::all();
