@@ -18,7 +18,7 @@ class ModuleController extends Controller
 
     public function index()
     {
-        //$this->checkpermission('module-list');
+        $this->checkpermission('module-list');
         $module = Module::orderBy('name', 'asc')->paginate(10);
         return view('backend.module.list', compact('module'));
     }
@@ -30,7 +30,7 @@ class ModuleController extends Controller
      */
     public function create()
     {
-        //$this->checkpermission('module-create');
+        $this->checkpermission('module-create');
         $role = Role::all();
         return view('backend.module.create', compact('role'));
     }
@@ -77,7 +77,7 @@ class ModuleController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
     /**
      * Show the form for editing the specified resource.
@@ -87,9 +87,10 @@ class ModuleController extends Controller
      */
     public function edit($id)
     {
-        $module = Module::find($id);
-        $role = Role::all();
-        return view('backend.module.edit',compact('module','role'));
+
+//        $module = Module::find($id);
+//        $role = Role::all();
+//        return view('backend.module.edit',compact('module','role'));
     }
     /**
      * Update the specified resource in storage.
@@ -100,7 +101,7 @@ class ModuleController extends Controller
      */
     public function update(Request $request, $id)
     {
-       print_r($_POST);
+
     }
 
     /**

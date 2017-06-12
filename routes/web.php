@@ -45,3 +45,22 @@ Route::get('/permission/asign/{id}', ['as' => 'permission.asign', 'uses' => 'bac
 Route::post('/permission/permissionasign/{id}', ['as' => 'permission.permissionasign', 'uses' => 'backend\PermissionController@permissionasign']);
 
 
+Route::get('/productcategory-create',['as'=>'productcategory.create', 'uses'=>'backend\ProductcategoryController@create']);
+Route::get('/productcategory-list',['as'=>'productcategory.list', 'uses'=>'backend\ProductcategoryController@index']);
+Route::post('/productcategory-save',['as'=>'productcategory.store', 'uses'=>'backend\ProductcategoryController@store']);
+Route::delete('/productcategory-delete/{id}', ['as' => 'productcategory.delete', 'uses' => 'backend\ProductcategoryController@destroy']);
+Route::get('/productcategory-edit/{id}/edit', ['as' => 'productcategory.edit', 'uses' => 'backend\ProductcategoryController@edit']);
+Route::post('/productcategory-update/{id}', ['as' => 'productcategory.update', 'uses' => 'backend\ProductcategoryController@update']);
+
+
+Route::get('/product-create',['as'=>'product.create', 'uses'=>'backend\ProductController@create']);
+Route::get('/product-list',['as'=>'product.list', 'uses'=>'backend\ProductController@index']);
+Route::post('/product-save',['as'=>'product.store', 'uses'=>'backend\ProductController@store']);
+Route::delete('/product-delete/{id}', ['as' => 'product.delete', 'uses' => 'backend\ProductController@destroy']);
+Route::get('/product-edit/{id}/edit', ['as' => 'product.edit', 'uses' => 'backend\ProductController@edit']);
+Route::post('/product-update/{id}', ['as' => 'product.update', 'uses' => 'backend\ProductController@update']);
+
+Route::get('/product-sales',['as'=>'sales.create', 'uses'=>'backend\SalesController@create']);
+Route::post('/getproduct',['as'=>'sales.getproduct', 'uses'=>'backend\SalesController@getproduct']);
+Route::post('/getquantity',['as'=>'sales.getquantity', 'uses'=>'backend\SalesController@getquantity']);
+Route::post('/getprice',['as'=>'sales.getprice', 'uses'=>'backend\SalesController@getprice']);

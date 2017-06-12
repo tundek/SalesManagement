@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    Role Listing Page
+    Product Listing Page
 @endsection
 @section('css')
 
@@ -11,13 +11,13 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Role Management</h3>
+                    <h3>Product Management</h3>
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 100px;">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 50px;">
                             <div class="input-group">
-                                <a href="{{route('role.create')}}" class="btn btn-success">Create New Role</a>
+                                <a href="{{route('product.create')}}" class="btn btn-success">Create Product</a>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Listing Role</h2>
+                            <h2>Listing Product</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -57,26 +57,48 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <table class="table table-responsive">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="categorytable">
                                 <thead>
                                 <tr>
                                     <th>S.N.</th>
-                                    <th>Role Name</th>
-                                    <th>created_date</th>
-                                    <th>updated_date</th>
+                                    <th>Category Name</th>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>stock</th>
+                                    <th>status</th>
+                                    <th>created_by</th>
+                                    <th>modified_by</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=1 ?>
-                                @foreach($role as $m)
+                                @foreach($product as $pc)
                                     <tr>
                                         <th> {{$i++}}</th>
-                                        <td> {{$m->name}}</td>
-                                        <td> {{$m->created_at}}</td>
-                                        <td> {{$m->updated_at}}</td>
-                                        <td><a href="{{route('permission.asign',$m->id)}}" class="btn btn-info"> Asign Permission</a>
-                                            {{--<a href="" class="btn btn-info"> Asign Module</a>--}}
+                                        <td>{{$pc->n}} </td>
+                                        <td>{{$pc->name}} </td>
+                                        <td> {{$pc->quantity}}</td>
+                                        <td> {{$pc->price}}</td>
+                                        <td> {{$pc->stock}}</td>
+                                        <td>
+                                            @if($pc->status == 1)
+                                                <span class="label label-success"> Active </span>
+                                            @else
+                                                <span class="label label-danger">DeActive</span>
+                                            @endif
+                                        </td>
+                                        <td> {{$pc->created_by}}</td>
+                                        <td> {{$pc->modified_by}}</td>
+                                        <td>
+                                            <a href="{{route('product.edit',$pc->id)}}" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
+                                            <form action="{{route('product.delete' ,$pc->id)}}" method="post">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                {{ csrf_field()}}
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('are you sure to delete?')" ><i class="fa fa-trash-o"></i>Delete</button>
+                                            </form>
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -92,5 +114,10 @@
 @endsection
 
 @section('script')
-
+    <script type="text/javascript" src="/backend/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#categorytable').DataTable();
+        } );
+    </script>
 @endsection

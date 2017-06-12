@@ -51,7 +51,7 @@
                         <ul class="nav side-menu">
                             @php
                              $user = Auth::user();
-                             $module = $user->roles[0]->modules->where('view_sidebar','=',1);
+                             $module = $user->roles[0]->modules->sortBy('module_rank')->where('view_sidebar','=',1);
                             @endphp
                             @foreach($module as $m)
                             <li><a href="{{url($m->module_url)}}"><i class="{{$m->module_icon}}"></i>{{$m->name}}</a></li>

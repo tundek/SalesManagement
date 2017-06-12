@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    News Portal Dashboard Page
+    Sabaoko Bacery Dashboard Page
 @endsection
 @section('css')
     <!-- NProgress -->

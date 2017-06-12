@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //$this->checkpermission('user-register');
+        $this->checkpermission('user-register');
         $role = Role::all();
         return view('backend.user.register',compact('role'));
     }

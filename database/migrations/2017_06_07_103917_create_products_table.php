@@ -20,8 +20,9 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug', 100)->unique();
             $table->integer('quantity');
-            $table->integer('stock');
+            $table->integer('stock')->nullable();
             $table->integer('price');
+            $table->boolean('status')->default(1);
             $table->string('created_by', 100);
             $table->foreign('created_by')->references('username')->on('users');
             $table->string('modified_by', 100)->nullable();
