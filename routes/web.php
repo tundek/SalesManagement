@@ -64,6 +64,8 @@ Route::post('/product-update/{id}', ['as' => 'product.update', 'uses' => 'backen
 Route::get('/product-sales',['as'=>'sales.create', 'uses'=>'backend\SalesController@create']);
 Route::post('/sales-store',['as'=>'sales.store', 'uses'=>'backend\SalesController@store']);
 Route::get('/sales-list',['as'=>'sales.list', 'uses'=>'backend\SalesController@index']);
+Route::get('/sales-pdf/{id}',['as'=>'sales.print', 'uses'=>'backend\SalesController@getpdf']);
+Route::get('/sales-allpdf',['as'=>'sales.printall', 'uses'=>'backend\SalesController@getallpdf']);
 
 Route::post('/getproduct',['as'=>'sales.getproduct', 'uses'=>'backend\SalesController@getproduct']);
 Route::post('/getquantity',['as'=>'sales.getquantity', 'uses'=>'backend\SalesController@getquantity']);

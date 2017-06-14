@@ -22,15 +22,17 @@
     </thead>
     <tbody>
     <?php $i=1 ?>
-        <tr>
-            <td>{{$i}}</td>
-            <td>{{$bill->product_name}}</td>
-            <td>{{$bill->price}}</td>
-            <td>{{$bill->quantity}}</td>
-            <td>{{$bill->buyer_name}}</td>
-            <td>{{$bill->created_at}}</td>
-            <td>@if($bill->sales_status == 1) Cash @else Cash @endif</td>
-        </tr>
+    @foreach($report as $all)
+    <tr>
+        <td>{{$i++}}</td>
+        <td>{{$all->product_name}}</td>
+        <td>{{$all->price}}</td>
+        <td>{{$all->quantity}}</td>
+        <td>{{$all->buyer_name}}</td>
+        <td>{{$all->created_at}}</td>
+        <td>@if($all->sales_status == 1) Cash @endif</td>
+    </tr>
+    @endforeach
     </tbody>
 </table>
 </body>

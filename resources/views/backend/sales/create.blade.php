@@ -112,15 +112,6 @@
                                                 {{$errors->first('sales_quantity')}}
                                             @endif</b></span>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="saller_name">Saller Name*</label>
-                                    <input type="text" class="form-control" id="saller_name" name="saller_name" placeholder="Enter Your Name">
-                                    <span class="error"><b>
-                                         @if($errors->has('saller_name'))
-                                                {{$errors->first('saller_name')}}
-                                            @endif</b></span>
-                                </div>
                                 <div class="form-group">
                                     <label for="buyer_name">Buyer Name*</label>
                                     <input type="text" class="form-control" id="buyer_name" name="buyer_name" placeholder="Enter Buyer Name">
@@ -236,6 +227,5 @@
                 });
             });
         });
-
     </script>
 @endsection

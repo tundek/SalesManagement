@@ -17,6 +17,9 @@
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 50px;">
                             <div class="input-group">
+                                <a href="{{route('sales.printall')}}" class="btn btn-success">Import AllReport</a>
+                            </div>
+                            <div class="input-group">
                                 <a href="{{route('sales.create')}}" class="btn btn-success">Make New Sales</a>
                             </div>
                         </div>
@@ -88,7 +91,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{route('product.edit',$pc->id)}}" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
+                                            <a href="{{route('sales.print',$pc->id)}}" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
                                         </td>
                                     </tr>
                                 @endforeach

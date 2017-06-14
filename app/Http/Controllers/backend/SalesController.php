@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use PDF;
 
 class SalesController extends Controller
 {
@@ -51,7 +52,7 @@ class SalesController extends Controller
 
     public function index()
     {
-        $sales = Sale::all();
+        $sales = Sale::orderBy('created_at', 'DEC')->where('flag', '=', 1)->get();
         return view('backend.sales.list', compact('sales'));
     }
 
@@ -91,10 +92,30 @@ class SalesController extends Controller
 
     public function gettotalprice(Request $request)
     {
-      //  $product = Product::where('id', $request->product_id)->get();
-       // dd($product);
+        //  $product = Product::where('id', $request->product_id)->get();
+        // dd($product);
 
     }
 
+    public function getpdf($id)
+    {
+        $bill = Sale::find($id);
+        $bill->flag = 0;
+        $bill->update();
+        $pdf = PDF::loadView('backend.pdfbill.customer', compact('bill'));
+        $msg = $pdf->download('customer.pdf');
+        return $msg;
+        if ($msg) {
+            return redirect()->route('sales.list')->with('success_message', 'successfully Make Sales');
+        }
+    }
+
+    public function getallpdf()
+    {
+        $report = Sale::all();
+        $pdf = PDF::loadView('backend.pdfbill.allreport', compact('report'));
+        return $pdf->download('customer.pdf');
+
+    }
 
 }
