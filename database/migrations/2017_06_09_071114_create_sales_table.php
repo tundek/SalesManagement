@@ -17,12 +17,17 @@ class CreateSalesTable extends Migration
             $table->increments('id');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
+            $table->string('product_name');
             $table->integer('quantity');
             $table->integer('price');
+            $table->string('saller_name');
+            $table->string('buyer_name');
             $table->boolean('sales_status')->default(1);
             $table->dateTime('sales_date');
             $table->timestamps();
         });
+
+
     }
 
     /**

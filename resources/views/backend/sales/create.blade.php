@@ -15,6 +15,11 @@
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 75px;">
+                            <div class="input-group">
+                                <a href="{{route('sales.list')}}" class="btn btn-success">View sales</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,7 +58,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <form action="" method="post">
+                            <form action="{{route('sales.store')}}" method="post">
                                 {{ csrf_field()}}
                                 <div class="form-group">
                                     <label for="productcategory_id">Chose ProductCategory</label>
@@ -81,24 +86,57 @@
                                     </span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="quantity">Quantity Available*</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity Available">
+                                    <input type="hidden"  class="form-control" id="product_name" name="product_name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="quantity">Stock Available</label>
+                                    <input type="number" class="form-control" id="stock" name="stock" placeholder="Stock Available" disabled>
                                     <span class="error"><b>
-                                         @if($errors->has('quantity'))
-                                                {{$errors->first('quantity')}}
+                                         @if($errors->has('stock'))
+                                                {{$errors->first('stock')}}
                                             @endif</b></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Price*</label>
-                                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter price">
+                                    <input type="number" class="form-control" id="price" name="price" placeholder="price">
                                     <span class="error"><b>
                                          @if($errors->has('price'))
                                                 {{$errors->first('price')}}
+                                            @endif</b></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sales_quantity">Sales Quantity</label>
+                                    <input type="number" class="form-control" id="sales_quantity" name="sales_quantity" placeholder="Quantity">
+                                    <span class="error"><b>
+                                         @if($errors->has('sales_quantity'))
+                                                {{$errors->first('sales_quantity')}}
+                                            @endif</b></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="saller_name">Saller Name*</label>
+                                    <input type="text" class="form-control" id="saller_name" name="saller_name" placeholder="Enter Your Name">
+                                    <span class="error"><b>
+                                         @if($errors->has('saller_name'))
+                                                {{$errors->first('saller_name')}}
+                                            @endif</b></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="buyer_name">Buyer Name*</label>
+                                    <input type="text" class="form-control" id="buyer_name" name="buyer_name" placeholder="Enter Buyer Name">
+                                    <span class="error"><b>
+                                         @if($errors->has('buyer_name'))
+                                                {{$errors->first('buyer_name')}}
                                          @endif</b></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Sales Status:- &nbsp;</label>
+                                    <input type="radio" name="sales_status" value="1" id="Active" checked=""><label for="Active"> Cash Sales </label>
+                                    <input type="radio" name="sales_status" id="deactive" value="0"><label for="deactive"> Credit Sales </label>
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" name="btnCreate" class="btn btn-primary" >Make Sales</button>
+                                    <button type="submit" name="btnSave" class="btn btn-primary" >Make Sales</button>
                                 </div>
                             </form>
                         </div>
@@ -138,8 +176,8 @@
                     dataType:'text',
                     success:function(resp){
                         console.log(resp);
-                        //$('#price').empty();
-                        $('#quantity').val(resp);
+                        //$('#quantity').empty();
+                        $('#stock').val(resp);
 
                     }
 
@@ -162,8 +200,42 @@
                     }
 
                 });
+            });
+            $('#product_id').on('change',function(){
+                var prdid = $(this).val();
+                var path = 'getproductname';
+                $.ajax({
+                    url:path,
+                    method:'post',
+                    data:{'product_id' :prdid,'_token':$('input[name=_token]').val()},
+                    dataType:'text',
+                    success:function(resp){
+                        console.log(resp);
+                        //$('#price').empty();
+                        $('#product_name').val(resp);
 
+                    }
+
+                });
+            });
+
+            $('#sales_quantity').keyup(function () {
+                var prdid = $(this).val();
+                var path = 'gettotalprice';
+                $.ajax({
+                    url: path,
+                    method: 'post',
+                    data: {'id': prdid, '_token': $('input[name=_token]').val()},
+                    dataType: 'text',
+                    success: function (resp) {
+                        //$('#price').empty();
+                        $('#price').append(resp);
+
+                    }
+
+                });
             });
         });
+
     </script>
 @endsection

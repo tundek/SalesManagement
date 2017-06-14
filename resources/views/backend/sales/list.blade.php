@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    Product Listing Page
+   Make Sales Listing Page
 @endsection
 @section('css')
 
@@ -11,13 +11,13 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Product Management</h3>
+                    <h3>Sales Management</h3>
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 50px;">
                             <div class="input-group">
-                                <a href="{{route('product.create')}}" class="btn btn-success">Create Product</a>
+                                <a href="{{route('sales.create')}}" class="btn btn-success">Make New Sales</a>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Listing Product</h2>
+                            <h2>Listing sales Deails</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -61,44 +61,34 @@
                                 <thead>
                                 <tr>
                                     <th>S.N.</th>
-                                    <th>Category Name</th>
-                                    <th>Name</th>
-                                    <th>Quantity</th>
+                                    <th>Product Name</th>
                                     <th>Price</th>
-                                    <th>stock</th>
-                                    <th>status</th>
-                                    <th>created_by</th>
-                                    <th>modified_by</th>
+                                    <th>Quantity</th>
+                                    <th>Buyer Name</th>
+                                    <th>sales Date</th>
+                                    <th>Sales status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=1 ?>
-                                @foreach($product as $pc)
+                                @foreach($sales as $pc)
                                     <tr>
                                         <th> {{$i++}}</th>
-                                        <td>{{$pc->n}} </td>
-                                        <td>{{$pc->name}} </td>
+                                        <td>{{$pc->product_name}} </td>
+                                        <td>{{$pc->price}} </td>
                                         <td> {{$pc->quantity}}</td>
-                                        <td> {{$pc->price}}</td>
-                                        <td> {{$pc->stock}}</td>
+                                        <td> {{$pc->buyer_name}}</td>
+                                        <td> {{$pc->sales_date}}</td>
                                         <td>
-                                            @if($pc->status == 1)
-                                                <span class="label label-success"> Active </span>
+                                            @if($pc->sales_status == 1)
+                                                <span class="label label-success"> cash </span>
                                             @else
-                                                <span class="label label-danger">DeActive</span>
+                                                <span class="label label-danger">cerdit</span>
                                             @endif
                                         </td>
-                                        <td> {{$pc->created_by}}</td>
-                                        <td> {{$pc->modified_by}}</td>
                                         <td>
-                                            <a href="{{route('product.edit',$pc->id)}}" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
-                                            <form action="{{route('product.delete' ,$pc->id)}}" method="post">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                {{ csrf_field()}}
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('are you sure to delete?')" ><i class="fa fa-trash-o"></i>Delete</button>
-                                            </form>
-
+                                            <a href="{{route('product.edit',$pc->id)}}" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
                                         </td>
                                     </tr>
                                 @endforeach

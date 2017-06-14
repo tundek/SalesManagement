@@ -41,6 +41,7 @@ Route::delete('/permission-delete/{id}', ['as' => 'permission.delete', 'uses' =>
 Route::get('/permission-edit/{id}', ['as' => 'permission.edit', 'uses' => 'backend\PermissionController@edit']);
 Route::post('/permission-update/{id}', ['as' => 'permission.update', 'uses' => 'backend\PermissionController@update']);
 
+
 Route::get('/permission/asign/{id}', ['as' => 'permission.asign', 'uses' => 'backend\PermissionController@asign']);
 Route::post('/permission/permissionasign/{id}', ['as' => 'permission.permissionasign', 'uses' => 'backend\PermissionController@permissionasign']);
 
@@ -61,6 +62,11 @@ Route::get('/product-edit/{id}/edit', ['as' => 'product.edit', 'uses' => 'backen
 Route::post('/product-update/{id}', ['as' => 'product.update', 'uses' => 'backend\ProductController@update']);
 
 Route::get('/product-sales',['as'=>'sales.create', 'uses'=>'backend\SalesController@create']);
+Route::post('/sales-store',['as'=>'sales.store', 'uses'=>'backend\SalesController@store']);
+Route::get('/sales-list',['as'=>'sales.list', 'uses'=>'backend\SalesController@index']);
+
 Route::post('/getproduct',['as'=>'sales.getproduct', 'uses'=>'backend\SalesController@getproduct']);
 Route::post('/getquantity',['as'=>'sales.getquantity', 'uses'=>'backend\SalesController@getquantity']);
 Route::post('/getprice',['as'=>'sales.getprice', 'uses'=>'backend\SalesController@getprice']);
+Route::post('/gettotalprice',['as'=>'sales.gettotalprice', 'uses'=>'backend\SalesController@gettotalprice']);
+Route::post('/getproductname',['as'=>'sales.getproductname', 'uses'=>'backend\SalesController@getproductname']);
