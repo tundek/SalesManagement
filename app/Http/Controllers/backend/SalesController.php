@@ -23,11 +23,9 @@ class SalesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'productcategory_id' => 'required',
             'product_id' => 'required',
             'sales_quantity' => 'required',
             'price' => 'required',
-            'buyer_name' => 'required',
         ]);
 
         $update = Sale::create([
@@ -37,7 +35,6 @@ class SalesController extends Controller
             'price' => $request->price * $request->sales_quantity,
             'status' => $request->status,
             'saller_name' => Auth::user()->name,
-            'buyer_name' => $request->buyer_name,
             'created_by' => Auth::user()->username,
             'sales_date' => date('Y-m-d H:i:s'),
         ]);
@@ -45,7 +42,7 @@ class SalesController extends Controller
             $product = Product::find($request->product_id);
             $product->stock = $product->stock - $request->sales_quantity;
             $product->update();
-            return redirect()->route('sales.list')->with('success_message', 'successfully Make Sales');
+            return redirect()->route('sales.create')->with('success_message', 'successfully Make Sales');
         }
 
     }
@@ -90,13 +87,6 @@ class SalesController extends Controller
 
     }
 
-    public function gettotalprice(Request $request)
-    {
-        //  $product = Product::where('id', $request->product_id)->get();
-        // dd($product);
-
-    }
-
     public function getpdf($id)
     {
         $bill = Sale::find($id);
@@ -105,9 +95,6 @@ class SalesController extends Controller
         $pdf = PDF::loadView('backend.pdfbill.customer', compact('bill'));
         $msg = $pdf->download('customer.pdf');
         return $msg;
-        if ($msg) {
-            return redirect()->route('sales.list')->with('success_message', 'successfully Make Sales');
-        }
     }
 
     public function getallpdf()

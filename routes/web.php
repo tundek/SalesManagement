@@ -64,11 +64,17 @@ Route::post('/product-update/{id}', ['as' => 'product.update', 'uses' => 'backen
 Route::get('/product-sales',['as'=>'sales.create', 'uses'=>'backend\SalesController@create']);
 Route::post('/sales-store',['as'=>'sales.store', 'uses'=>'backend\SalesController@store']);
 Route::get('/sales-list',['as'=>'sales.list', 'uses'=>'backend\SalesController@index']);
-Route::get('/sales-pdf/{id}',['as'=>'sales.print', 'uses'=>'backend\SalesController@getpdf']);
+Route::get('/sales-pdf',['as'=>'sales.print', 'uses'=>'backend\SalesController@getpdf']);
 Route::get('/sales-allpdf',['as'=>'sales.printall', 'uses'=>'backend\SalesController@getallpdf']);
 
 Route::post('/getproduct',['as'=>'sales.getproduct', 'uses'=>'backend\SalesController@getproduct']);
 Route::post('/getquantity',['as'=>'sales.getquantity', 'uses'=>'backend\SalesController@getquantity']);
 Route::post('/getprice',['as'=>'sales.getprice', 'uses'=>'backend\SalesController@getprice']);
-Route::post('/gettotalprice',['as'=>'sales.gettotalprice', 'uses'=>'backend\SalesController@gettotalprice']);
 Route::post('/getproductname',['as'=>'sales.getproductname', 'uses'=>'backend\SalesController@getproductname']);
+
+Route::get('/preorder-create',['as'=>'preorder.create', 'uses'=>'backend\PreorderController@create']);
+Route::get('/preorder-list',['as'=>'preorder.list', 'uses'=>'backend\PreorderController@index']);
+Route::post('/preorder-save',['as'=>'preorder.store', 'uses'=>'backend\PreorderController@store']);
+Route::delete('/preorder-delete/{id}', ['as' => 'preorder.delete', 'uses' => 'backend\PreorderController@destroy']);
+Route::get('/preorder-edit/{id}/edit', ['as' => 'preorder.edit', 'uses' => 'backend\PreorderController@edit']);
+Route::post('/preorder-update/{id}', ['as' => 'preorder.update', 'uses' => 'backend\PreorderController@update']);

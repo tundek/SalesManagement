@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-   Make Sales Listing Page
+    PreOrder Listing Page
 @endsection
 @section('css')
 
@@ -11,16 +11,13 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Sales Management</h3>
+                    <h3>PreOrder Management</h3>
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 50px;">
                             <div class="input-group">
-                                <a href="{{route('sales.printall')}}" class="btn btn-success">Import AllReport</a>
-                            </div>
-                            <div class="input-group">
-                                <a href="{{route('sales.create')}}" class="btn btn-success">Make New Sales</a>
+                                <a href="{{route('preorder.create')}}" class="btn btn-success">Create PreOrder</a>
                             </div>
                         </div>
                     </div>
@@ -41,7 +38,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Listing sales Deails</h2>
+                            <h2>Listing PreOrder</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -65,34 +62,36 @@
                                 <tr>
                                     <th>S.N.</th>
                                     <th>Product Name</th>
-                                    <th>Price</th>
                                     <th>Quantity</th>
-                                    <th>sales Date</th>
-                                    <th>Sales status</th>
+                                    <th>totalamount</th>
+                                    <th>paidamount</th>
+                                    <th>DueAmount</th>
+                                    <th>Customer Name</th>
+                                    <th>Customer Phone</th>
+                                    <th>Order Pick Date</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=1 ?>
-                                @foreach($sales as $pc)
+                                @foreach($preorder as $pc)
                                     <tr>
-                                        <th> {{$i++}}</th>
-                                        <td>{{$pc->product_name}} </td>
-                                        <td>{{$pc->price}} </td>
-                                        <td> {{$pc->quantity}}</td>
-                                        <td> {{$pc->sales_date}}</td>
+                                        <th> {{$i++}} </th>
+                                        <td> {{$pc->product_name}} </td>
+                                        <td> {{$pc->quantity}} </td>
+                                        <td> {{$pc->totalamount}} </td>
+                                        <td> {{$pc->paidamount}} </td>
+                                        <td> {{$pc->dueamount}} </td>
+                                        <td> {{$pc->customer_name}} </td>
+                                        <td> {{$pc->customer_phone}} </td>
+                                        <td> {{$pc->order_pick}} </td>
                                         <td>
-                                            @if($pc->sales_status == 1)
-                                                <span class="label label-success"> cash </span>
-                                            @else
-                                                <span class="label label-danger">cerdit</span>
-                                            @endif
+                                            <a href="" class="btn btn-info"> Confirm</a>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <a href="{{route('sales.print')}}" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>
                 </div>

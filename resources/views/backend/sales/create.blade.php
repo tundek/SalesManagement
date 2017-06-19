@@ -3,7 +3,7 @@
     Make Sales Page
 @endsection
 @section('css')
-
+    <link rel="stylesheet" href="/backend/plugins/select2.min.css" />
 @endsection
 <!-- page content -->
 @section('content')
@@ -17,7 +17,7 @@
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 75px;">
                             <div class="input-group">
-                                <a href="{{route('sales.list')}}" class="btn btn-success">View sales</a>
+                                <a href="{{route('sales.list')}}" class="btn btn-success">CheckOut Sales</a>
                             </div>
                         </div>
                     </div>
@@ -61,23 +61,12 @@
                             <form action="{{route('sales.store')}}" method="post">
                                 {{ csrf_field()}}
                                 <div class="form-group">
-                                    <label for="productcategory_id">Chose ProductCategory</label>
-                                    <select class="form-control" id="productcategory_id" name="productcategory_id">
-                                        <option value="">--Select Productcategory--</option>
-                                        @foreach($productcategory as $m)
+                                    <label for="product_id">Chose Product</label>
+                                    <select class=" form-control js-example-basic-single" id="product_id" name="product_id">
+                                        <option value="">--Search Product--</option>
+                                        @foreach($product as $m)
                                             <option value="{{$m->id}}">{{$m->name}}</option>
                                         @endforeach
-                                    </select>
-                                    <span class="error"><b>
-                                       @if($errors->has('productcategory_id'))
-                                                {{$errors->first('productcategory_id')}}
-                                            @endif</b>
-                                    </span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="product_id">Chose Product</label>
-                                    <select class="form-control" id="product_id" name="product_id">
-                                        <option value="">--Select Product--</option>
                                     </select>
                                     <span class="error"><b>
                                        @if($errors->has('product_id'))
@@ -98,7 +87,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Price*</label>
-                                    <input type="number" class="form-control" id="price" name="price" placeholder="price">
+                                    <input type="number" class="form-control" id="price"placeholder="price">
                                     <span class="error"><b>
                                          @if($errors->has('price'))
                                                 {{$errors->first('price')}}
@@ -111,14 +100,6 @@
                                          @if($errors->has('sales_quantity'))
                                                 {{$errors->first('sales_quantity')}}
                                             @endif</b></span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="buyer_name">Buyer Name*</label>
-                                    <input type="text" class="form-control" id="buyer_name" name="buyer_name" placeholder="Enter Buyer Name">
-                                    <span class="error"><b>
-                                         @if($errors->has('buyer_name'))
-                                                {{$errors->first('buyer_name')}}
-                                         @endif</b></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Sales Status:- &nbsp;</label>
@@ -139,6 +120,13 @@
     <!-- /page content -->
 @endsection
 @section('script')
+    <script src="/backend/plugins/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".js-example-basic-single").select2();
+        });
+    </script>
+
     <script type="text/javascript">
         $(document).ready(function(){
             $('#productcategory_id').change(function(){
@@ -204,23 +192,6 @@
                         console.log(resp);
                         //$('#price').empty();
                         $('#product_name').val(resp);
-
-                    }
-
-                });
-            });
-
-            $('#sales_quantity').keyup(function () {
-                var prdid = $(this).val();
-                var path = 'gettotalprice';
-                $.ajax({
-                    url: path,
-                    method: 'post',
-                    data: {'id': prdid, '_token': $('input[name=_token]').val()},
-                    dataType: 'text',
-                    success: function (resp) {
-                        //$('#price').empty();
-                        $('#price').append(resp);
 
                     }
 

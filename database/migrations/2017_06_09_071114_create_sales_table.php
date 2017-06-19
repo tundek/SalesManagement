@@ -21,7 +21,6 @@ class CreateSalesTable extends Migration
             $table->integer('quantity');
             $table->integer('price');
             $table->string('saller_name');
-            $table->string('buyer_name');
             $table->boolean('sales_status')->default(1);
             $table->boolean('flag')->default(1);
             $table->dateTime('sales_date');

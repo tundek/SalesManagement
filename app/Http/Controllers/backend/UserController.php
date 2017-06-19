@@ -120,7 +120,7 @@ class UserController extends Controller
         ]);
 
         if (Auth::attempt(['username' => $request->get('username'), 'password' => $request->get('password')])) {
-            return redirect()->route('user.dashboard')->with('success_message', 'You are success fully loged In ');
+            return redirect()->route('sales.create')->with('success_message', 'You are success fully loged In ');
         } else {
             return redirect()->route('user.login')->with('error_message', 'Invalid Username or Password  ');
         }
