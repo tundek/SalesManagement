@@ -16,9 +16,9 @@
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 50px;">
-                            <div class="input-group">
-                                <a href="{{route('sales.printall')}}" class="btn btn-success">Import AllReport</a>
-                            </div>
+                            {{--<div class="input-group">--}}
+                                {{--<a href="{{route('sales.printall')}}" class="btn btn-success">Import AllReport</a>--}}
+                            {{--</div>--}}
                             <div class="input-group">
                                 <a href="{{route('sales.create')}}" class="btn btn-success">Make New Sales</a>
                             </div>
@@ -76,7 +76,7 @@
                                 @foreach($sales as $pc)
                                     <tr>
                                         <th> {{$i++}}</th>
-                                        <td>{{$pc->product_name}} </td>
+                                        <td>{{$pc->product_id}} </td>
                                         <td>{{$pc->price}} </td>
                                         <td> {{$pc->quantity}}</td>
                                         <td> {{$pc->sales_date}}</td>
@@ -92,7 +92,7 @@
                                 </tbody>
                             </table>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         <a href="{{route('sales.print')}}" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
+                         <a href="{{route('sales.printall')}}" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>
                 </div>

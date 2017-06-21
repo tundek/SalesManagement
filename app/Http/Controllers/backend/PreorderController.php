@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\Preorder;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class PreorderController extends Controller
     public function index()
     {
         $preorder = Preorder::all();
-        return view('backend.preorder.list',compact('preorder'));
+        return view('backend.preorder.list', compact('preorder'));
     }
 
     /**
@@ -27,7 +28,8 @@ class PreorderController extends Controller
      */
     public function create()
     {
-        return view('backend.preorder.create');
+        $product = Product::all();
+        return view('backend.preorder.create', compact('product'));
     }
 
     /**
@@ -39,21 +41,22 @@ class PreorderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'product_name' => 'required',
+            'product_id' => 'required',
             'quantity' => 'required',
-            'totalamount' => 'required',
+            'price' => 'required',
             'paidamount' => 'required',
             'customer_name' => 'required',
             'customer_phone' => 'required',
             'order_pick' => 'required',
             'message' => 'required',
         ]);
+        $totalamount = $request->price * $request->quantity;
         $message = Preorder::create([
-            'product_name' => $request->product_name,
+            'product_id' => $request->product_id,
             'quantity' => $request->quantity,
-            'totalamount' => $request->totalamount,
+            'totalamount' => $totalamount,
             'paidamount' => $request->paidamount,
-            'dueamount' => $request->totalamount - $request->paidamount,
+            'dueamount' => $totalamount - $request->paidamount,
             'customer_name' => $request->customer_name,
             'customer_phone' => $request->customer_phone,
             'order_pick' => $request->order_pick,
@@ -88,7 +91,7 @@ class PreorderController extends Controller
     public function edit($id)
     {
         $preorder = Preorder::find($id);
-        return view('backend.preorder.edit',compact('preorder'));
+        return view('backend.preorder.edit', compact('preorder'));
     }
 
     /**

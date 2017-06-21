@@ -15,7 +15,8 @@ class CreatePreordersTable extends Migration
     {
         Schema::create('preorders', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('product_name');
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('quantity');
             $table->double('totalamount');
             $table->double('paidamount');

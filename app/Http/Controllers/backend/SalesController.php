@@ -16,21 +16,21 @@ class SalesController extends Controller
     public function create()
     {
         $productcategory = Productcategory::all();
-        $product = Product::all();
-        return view('backend.sales.create', compact('productcategory', 'product'));
+        $product = Product::where('stock', '>=', 1)->get();
+        $sales = Sale::where('flag','=',1)->get();
+        return view('backend.sales.create', compact('productcategory', 'product','sales'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'product_id' => 'required',
-            'sales_quantity' => 'required',
             'price' => 'required',
+            'sales_quantity' => 'required',
         ]);
 
         $update = Sale::create([
             'product_id' => $request->product_id,
-            'product_name' => $request->product_name,
             'quantity' => $request->sales_quantity,
             'price' => $request->price * $request->sales_quantity,
             'status' => $request->status,
@@ -65,6 +65,7 @@ class SalesController extends Controller
             $opt = "<option>No Product Available for This Category</option>";
         }
         echo $opt;
+
     }
 
     public function getquantity(Request $request)
@@ -87,21 +88,15 @@ class SalesController extends Controller
 
     }
 
-    public function getpdf($id)
-    {
-        $bill = Sale::find($id);
-        $bill->flag = 0;
-        $bill->update();
-        $pdf = PDF::loadView('backend.pdfbill.customer', compact('bill'));
-        $msg = $pdf->download('customer.pdf');
-        return $msg;
-    }
 
     public function getallpdf()
     {
         $report = Sale::all();
+        $flag = new Sale();
+        $flag->flag = 0;
+        $flag->update();
         $pdf = PDF::loadView('backend.pdfbill.allreport', compact('report'));
-        return $pdf->download('customer.pdf');
+        return $pdf->stream('customer.pdf');
 
     }
 

@@ -18,6 +18,13 @@ class CreateRolesTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+//        \App\Models\Role::create([
+//            'name' => 'Super-Admin',
+//        ]);
+//
+//        \App\Models\Role::create([
+//            'name' => 'Admin',
+//        ]);
     }
 
     /**

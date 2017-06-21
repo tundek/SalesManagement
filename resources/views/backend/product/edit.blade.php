@@ -90,16 +90,6 @@
                                      </span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="slug">Slug*</label>
-                                    <input type="text" value="{{$product->slug}}" class="form-control" id="slug" name="slug"
-                                           placeholder="Enter slug">
-                                    <span class="error"><b>
-                                            @if($errors->has('slug'))
-                                                {{$errors->first('slug')}}
-                                            @endif</b>
-                                         </span>
-                                </div>
-                                <div class="form-group">
                                     <label for="quantity">Quantity*</label>
                                     <input type="number" value="{{$product->quantity}}" class="form-control" id="quantity" name="quantity"
                                            placeholder="Enter quantity">
