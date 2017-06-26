@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\Product;
-use App\Models\Productcategory;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,10 +14,12 @@ class SalesController extends Controller
 {
     public function create()
     {
-        $productcategory = Productcategory::all();
         $product = Product::where('stock', '>=', 1)->get();
-        $sales = Sale::where('flag','=',1)->get();
-        return view('backend.sales.create', compact('productcategory', 'product','sales'));
+        $sales = Sale::join('products', 'products.id', '=', 'sales.product_id')
+            ->select('sales.*', 'products.name')
+            ->where('flag', '=', 1)
+            ->get();
+        return view('backend.sales.create', compact('product', 'sales'));
     }
 
     public function store(Request $request)
@@ -28,30 +29,52 @@ class SalesController extends Controller
             'price' => 'required',
             'sales_quantity' => 'required',
         ]);
-
-        $update = Sale::create([
-            'product_id' => $request->product_id,
-            'quantity' => $request->sales_quantity,
-            'price' => $request->price * $request->sales_quantity,
-            'status' => $request->status,
-            'saller_name' => Auth::user()->name,
-            'created_by' => Auth::user()->username,
-            'sales_date' => date('Y-m-d H:i:s'),
-        ]);
-        if ($update) {
-            $product = Product::find($request->product_id);
-            $product->stock = $product->stock - $request->sales_quantity;
-            $product->update();
-            return redirect()->route('sales.create')->with('success_message', 'successfully Make Sales');
+        if ($request->ajax()) {
+            $sales = new Sale();
+            $sales->product_id = $request->product_id;
+            $sales->quantity = $request->sales_quantity;
+            $sales->price = $request->price;
+            $sales->sales_status = $request->sales_status;
+            $sales->saller_name = Auth::user()->username;
+            $sales->sales_date = date('Y-m-d H:i:s');
+            if ($sales->save()) {
+                $product = Product::find($request->product_id);
+                $product->stock = $product->stock - $request->sales_quantity;
+                if ($product->update()) {
+                    return response(['success_message' => 'SuccessFully Make sales']);
+                }
+            }
+        } else {
+            return response(['success_message' => 'Filed To Make sales']);
         }
 
     }
 
     public function index()
     {
-        $sales = Sale::orderBy('created_at', 'DEC')->where('flag', '=', 1)->get();
+        $sales = Sale::join('products', 'products.id', '=', 'sales.product_id')
+            ->select('sales.*', 'products.name')
+            ->orderBy('sales.created_at', 'DEC')
+            ->where('sales.flag', '=', 1)
+            ->get();
         return view('backend.sales.list', compact('sales'));
     }
+
+    public function ajaxlist()
+    {
+        $sales = Sale::join('products', 'products.id', '=', 'sales.product_id')
+            ->select('sales.*', 'products.name')
+            ->orderBy('sales.created_at', 'DEC')
+            ->where('sales.flag', '=', 1)
+            ->get();
+        return view('backend.sales.ajaxlist', compact('sales'));
+    }
+
+//    public function getajaxproduct()
+//    {
+//        $product = Product::where('stock', '>=', 1)->get();
+//        return view('backend.sales.getajaxproduct', compact('product'));
+//    }
 
     public function getproduct()
     {
@@ -65,7 +88,6 @@ class SalesController extends Controller
             $opt = "<option>No Product Available for This Category</option>";
         }
         echo $opt;
-
     }
 
     public function getquantity(Request $request)
@@ -81,6 +103,14 @@ class SalesController extends Controller
         echo $product[0]->price;
     }
 
+    public function gettotalprice(Request $request)
+    {
+        $quantity = $request->sales_quantity;
+        $price = $request->price;
+        $total = $quantity * $price;
+        echo $total;
+    }
+
     public function getproductname(Request $request)
     {
         $product = Product::where('id', $request->product_id)->get();
@@ -88,16 +118,11 @@ class SalesController extends Controller
 
     }
 
-
     public function getallpdf()
     {
         $report = Sale::all();
-        $flag = new Sale();
-        $flag->flag = 0;
-        $flag->update();
         $pdf = PDF::loadView('backend.pdfbill.allreport', compact('report'));
         return $pdf->stream('customer.pdf');
-
     }
 
 }

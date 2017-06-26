@@ -12,11 +12,11 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>PreOrder Management </h3>
+                    <h3>PreOrder Management</h3>
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 75px;">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 120px;">
                             <div class="input-group">
                                 <a href="{{route('preorder.list')}}" class="btn btn-success">View Preorder</a>
                             </div>

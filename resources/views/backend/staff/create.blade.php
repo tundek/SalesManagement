@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    Product create Page
+    Staff create Page
 @endsection
 @section('css')
 
@@ -11,13 +11,13 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Product Management </h3>
+                    <h3>Staff Management </h3>
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 130px;">
                             <div class="input-group">
-                                <a href="{{route('product.list')}}" class="btn btn-success">View Product</a>
+                                <a href="{{route('staff.list')}}" class="btn btn-success">View Staffs</a>
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Create Product</h2>
+                            <h2>Create New Staff</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -59,22 +59,8 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <form action="{{route('product.store')}}" method="post">
+                            <form action="{{route('staff.store')}}" method="post">
                                 {{ csrf_field()}}
-                                <div class="form-group">
-                                    <label for="productcategory_id">Chose ProductCategory</label>
-                                    <select class="form-control" id="productcategory_id" name="productcategory_id">
-                                        <option value="">--Select Productcategory--</option>
-                                        @foreach($productcategory as $m)
-                                            <option value="{{$m->id}}">{{$m->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="error"><b>
-                                       @if($errors->has('productcategory_id'))
-                                                {{$errors->first('productcategory_id')}}
-                                            @endif</b>
-                                    </span>
-                                </div>
                                 <div class="form-group">
                                     <label for="name">Name*</label>
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
@@ -85,29 +71,32 @@
                                      </span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="quantity">Quantity*</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity">
+                                    <label for="phone">phone*</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Staff's Phone Number">
                                     <span class="error"><b>
-                                         @if($errors->has('quantity'))
-                                                {{$errors->first('quantity')}}
-                                            @endif</b></span>
+                                         @if($errors->has('phone'))
+                                                {{$errors->first('phone')}}
+                                         @endif</b></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="price">Price*</label>
-                                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter price">
+                                    <label for="designation">Designation*</label>
+                                    <input type="text" class="form-control" id="designation" name="designation" placeholder="Enter designation">
                                     <span class="error"><b>
-                                         @if($errors->has('price'))
-                                                {{$errors->first('price')}}
-                                            @endif</b></span>
+                                         @if($errors->has('designation'))
+                                                {{$errors->first('designation')}}
+                                         @endif</b></span>
                                 </div>
                                 <div class="form-group">
-                                    <label>Status</label>
-                                    <input type="radio" name="status" value="1" id="Active" checked=""><label for="Active"> Active</label>
-                                    <input type="radio" name="status" id="deactive" value="0"><label for="deactive">DeActive</label>
+                                    <label for="sallery">Sallery*</label>
+                                    <input type="number" class="form-control" id="sallery" name="sallery" placeholder="Enter sallery Monthly sallery">
+                                    <span class="error"><b>
+                                         @if($errors->has('sallery'))
+                                                {{$errors->first('sallery')}}
+                                         @endif</b></span>
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" name="btnCreate" class="btn btn-primary" >Save Product</button>
+                                    <button type="submit" name="btnCreate" class="btn btn-primary" >Save staff</button>
                                 </div>
                             </form>
                         </div>
@@ -121,16 +110,4 @@
 
 @section('script')
     <script src="/backend/plugins/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            var $foo = $('#name');
-            var $bar = $('#slug');
-            function onChange() {
-                $bar.val($foo.val().replace(/\s+/g, '-').toLowerCase());
-            };
-            $('#name')
-                .change(onChange)
-                .keyup(onChange);
-        });
-    </script>
 @endsection

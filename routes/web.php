@@ -64,11 +64,14 @@ Route::post('/product-update/{id}', ['as' => 'product.update', 'uses' => 'backen
 Route::get('/product-sales',['as'=>'sales.create', 'uses'=>'backend\SalesController@create']);
 Route::post('/sales-store',['as'=>'sales.store', 'uses'=>'backend\SalesController@store']);
 Route::get('/sales-list',['as'=>'sales.list', 'uses'=>'backend\SalesController@index']);
+Route::get('/ajaxsales-list',['as'=>'ajaxsales.list', 'uses'=>'backend\SalesController@ajaxlist']);
 Route::get('/sales-allpdf',['as'=>'sales.printall', 'uses'=>'backend\SalesController@getallpdf']);
 
 Route::post('/getproduct',['as'=>'sales.getproduct', 'uses'=>'backend\SalesController@getproduct']);
+Route::get('/getajaxproduct',['as'=>'sales.getajaxproduct', 'uses'=>'backend\SalesController@getajaxproduct']);
 Route::post('/getquantity',['as'=>'sales.getquantity', 'uses'=>'backend\SalesController@getquantity']);
 Route::post('/getprice',['as'=>'sales.getprice', 'uses'=>'backend\SalesController@getprice']);
+Route::post('/gettotalprice',['as'=>'sales.gettotalprice', 'uses'=>'backend\SalesController@gettotalprice']);
 Route::post('/getproductname',['as'=>'sales.getproductname', 'uses'=>'backend\SalesController@getproductname']);
 
 Route::get('/preorder-create',['as'=>'preorder.create', 'uses'=>'backend\PreorderController@create']);
@@ -77,3 +80,18 @@ Route::post('/preorder-save',['as'=>'preorder.store', 'uses'=>'backend\PreorderC
 Route::delete('/preorder-delete/{id}', ['as' => 'preorder.delete', 'uses' => 'backend\PreorderController@destroy']);
 Route::get('/preorder-edit/{id}/edit', ['as' => 'preorder.edit', 'uses' => 'backend\PreorderController@edit']);
 Route::post('/preorder-update/{id}', ['as' => 'preorder.update', 'uses' => 'backend\PreorderController@update']);
+
+Route::get('/staff-create',['as'=>'staff.create', 'uses'=>'backend\StaffController@create']);
+Route::get('/staff-list',['as'=>'staff.list', 'uses'=>'backend\StaffController@index']);
+Route::post('/staff-save',['as'=>'staff.store', 'uses'=>'backend\StaffController@store']);
+Route::delete('/staff-delete/{id}', ['as' => 'staff.delete', 'uses' => 'backend\StaffController@destroy']);
+Route::get('/staff-edit/{id}/edit', ['as' => 'staff.edit', 'uses' => 'backend\StaffController@edit']);
+Route::post('/staff-update/{id}', ['as' => 'staff.update', 'uses' => 'backend\StaffController@update']);
+
+Route::get('/salary-create',['as'=>'salary.create', 'uses'=>'backend\SalaryController@create']);
+Route::get('/salary-list',['as'=>'salary.list', 'uses'=>'backend\SalaryController@index']);
+Route::post('/salary-save',['as'=>'salary.store', 'uses'=>'backend\SalaryController@store']);
+Route::delete('/salary-delete/{id}', ['as' => 'salary.delete', 'uses' => 'backend\SalaryController@destroy']);
+Route::get('/salary-edit/{id}/edit', ['as' => 'salary.edit', 'uses' => 'backend\SalaryController@edit']);
+Route::post('/salary-update/{id}', ['as' => 'salary.update', 'uses' => 'backend\SalaryController@update']);
+

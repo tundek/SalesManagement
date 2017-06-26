@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-   Make Sales Listing Page
+   Staff Salary Listing Page
 @endsection
 @section('css')
 
@@ -11,16 +11,13 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Sales Management</h3>
+                    <h3>Salary Management</h3>
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 50px;">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 140px;">
                             <div class="input-group">
-                                <a href="{{route('sales.printall')}}" class="btn btn-success">Import AllReport</a>
-                            </div>
-                            <div class="input-group">
-                                <a href="{{route('sales.create')}}" class="btn btn-success">Make New Sales</a>
+                                <a href="{{route('salary.create')}}" class="btn btn-success">Paid Salary</a>
                             </div>
                         </div>
                     </div>
@@ -41,7 +38,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Listing sales Deails</h2>
+                            <h2>Listing salary</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -64,48 +61,39 @@
                                 <thead>
                                 <tr>
                                     <th>S.N.</th>
-                                    <th>Product Name</th>
-                                    <th>Quantity</th>
-                                    <th>Total Price</th>
-                                    <th>sales Date</th>
-                                    <th>Sales status</th>
+                                    <th>Staff Name</th>
+                                    <th>Staff Phone</th>
+                                    <th>Paid Amount</th>
+                                    <th>Paid Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=1 ?>
-                                @foreach($sales as $pc)
+                                @foreach($salary as $pc)
                                     <tr>
                                         <th> {{$i++}}</th>
                                         <td>{{$pc->name}} </td>
-                                        <td> {{$pc->quantity}}</td>
-                                        <td>{{$pc->price}} </td>
-                                        <td> {{$pc->sales_date}}</td>
-                                        <td>
-                                            @if($pc->sales_status == 1)
-                                                <span class="label label-success"> cash </span>
-                                            @else
-                                                <span class="label label-danger"> cerdit </span>
-                                            @endif
-                                        </td>
+                                        <td>{{$pc->phone}} </td>
+                                        <td> {{$pc->paid_amount}}</td>
+                                        <td>{{$pc->paid_date}} </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td colspan="3">Grand Total</td>
+                                    <td colspan="3">Total Paid Salary</td>
                                     <td>
                                         <?php $total=0 ?>
-                                        @if($sales)
-                                            @foreach($sales as $s)
+                                        @if($salary)
+                                            @foreach($salary as $s)
                                                 @php
-                                                    $price = $s->price;
+                                                    $price = $s->paid_amount;
                                                     $total += $price;
                                                 @endphp
                                             @endforeach
                                             {{$total}}
                                         @endif
                                     </td>
-                                    <td></td>
                                     <td></td>
                                 </tr>
                                 </tfoot>

@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-   Make Sales Listing Page
+    Staff Listing Page
 @endsection
 @section('css')
 
@@ -11,16 +11,13 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Sales Management</h3>
+                    <h3>Staff Management</h3>
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 50px;">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 150px;">
                             <div class="input-group">
-                                <a href="{{route('sales.printall')}}" class="btn btn-success">Import AllReport</a>
-                            </div>
-                            <div class="input-group">
-                                <a href="{{route('sales.create')}}" class="btn btn-success">Make New Sales</a>
+                                <a href="{{route('staff.create')}}" class="btn btn-success">New staff</a>
                             </div>
                         </div>
                     </div>
@@ -41,7 +38,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Listing sales Deails</h2>
+                            <h2>Listing staff Deatils</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -64,53 +61,42 @@
                                 <thead>
                                 <tr>
                                     <th>S.N.</th>
-                                    <th>Product Name</th>
-                                    <th>Quantity</th>
-                                    <th>Total Price</th>
-                                    <th>sales Date</th>
-                                    <th>Sales status</th>
+                                    <th> Name</th>
+                                    <th>Phone</th>
+                                    <th>Designation</th>
+                                    <th>sallery</th>
+                                    <th>status</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=1 ?>
-                                @foreach($sales as $pc)
+                                @foreach($staff as $pc)
                                     <tr>
                                         <th> {{$i++}}</th>
                                         <td>{{$pc->name}} </td>
-                                        <td> {{$pc->quantity}}</td>
-                                        <td>{{$pc->price}} </td>
-                                        <td> {{$pc->sales_date}}</td>
+                                        <td>{{$pc->phone}} </td>
+                                        <td> {{$pc->designation}}</td>
+                                        <td> {{$pc->salary}} /Monthly</td>
                                         <td>
-                                            @if($pc->sales_status == 1)
-                                                <span class="label label-success"> cash </span>
+                                            @if($pc->status == 1)
+                                                <span class="label label-success"> Working </span>
                                             @else
-                                                <span class="label label-danger"> cerdit </span>
+                                                <span class="label label-danger">Leave</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{route('staff.edit',$pc->id)}}" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
+                                            <form action="{{route('staff.delete' ,$pc->id)}}" method="post">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                {{ csrf_field()}}
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('are you sure to delete?')" ><i class="fa fa-trash-o"></i> Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td colspan="3">Grand Total</td>
-                                    <td>
-                                        <?php $total=0 ?>
-                                        @if($sales)
-                                            @foreach($sales as $s)
-                                                @php
-                                                    $price = $s->price;
-                                                    $total += $price;
-                                                @endphp
-                                            @endforeach
-                                            {{$total}}
-                                        @endif
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                </tfoot>
+                               </tbody>
                             </table>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </div>
                 </div>

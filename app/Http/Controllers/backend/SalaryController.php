@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\Preorder;
-use App\Models\Product;
+use App\Models\Salary;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class PreorderController extends Controller
+class SalaryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,10 @@ class PreorderController extends Controller
      */
     public function index()
     {
-        $preorder = Preorder::join('products','products.id','=','preorders.product_id')
-        ->select('preorders.*','products.name')
-        ->get();
-        return view('backend.preorder.list', compact('preorder'));
+        $salary = Salary::join('staffs', 'staffs.id', '=', 'salaries.staff_id')
+            ->select('salaries.*', 'staffs.name', 'staffs.phone')
+            ->get();
+        return view('backend.salary.list', compact('salary'));
     }
 
     /**
@@ -30,8 +30,8 @@ class PreorderController extends Controller
      */
     public function create()
     {
-        $product = Product::all();
-        return view('backend.preorder.create', compact('product'));
+        $staff = Staff::where('status', '=', 1)->get();
+        return view('backend.salary.create', compact('staff'));
     }
 
     /**
@@ -43,33 +43,20 @@ class PreorderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'product_id' => 'required',
-            'quantity' => 'required',
-            'price' => 'required',
-            'paidamount' => 'required',
-            'customer_name' => 'required',
-            'customer_phone' => 'required',
-            'order_pick' => 'required',
-            'message' => 'required',
+            'staff_id' => 'required',
+            'paid_amount' => 'required',
         ]);
-        $totalamount = $request->price * $request->quantity;
-        $message = Preorder::create([
-            'product_id' => $request->product_id,
-            'quantity' => $request->quantity,
-            'totalamount' => $totalamount,
-            'paidamount' => $request->paidamount,
-            'dueamount' => $totalamount - $request->paidamount,
-            'customer_name' => $request->customer_name,
-            'customer_phone' => $request->customer_phone,
-            'order_pick' => $request->order_pick,
-            'message' => $request->message,
+        $message = Salary::create([
+            'staff_id' => $request->staff_id,
+            'paid_amount' => $request->paid_amount,
+            'paid_date' => date('Y-m-d H:i:s'),
             'created_by' => Auth::user()->username,
             'created_at' => date('Y-m-d H:i:s'),
         ]);
         if ($message) {
-            return redirect()->route('preorder.list')->with('success_message', 'successfully created ');
+            return redirect()->route('salary.list')->with('success_message', 'successfully created ');
         } else {
-            return redirect()->route('preorder.create')->with('error_message', 'Failed To create');
+            return redirect()->route('salary.create')->with('error_message', 'Failed To create');
         }
     }
 
@@ -92,8 +79,7 @@ class PreorderController extends Controller
      */
     public function edit($id)
     {
-        $preorder = Preorder::find($id);
-        return view('backend.preorder.edit', compact('preorder'));
+        //
     }
 
     /**

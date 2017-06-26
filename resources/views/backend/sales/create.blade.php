@@ -3,7 +3,7 @@
     Make Sales Page
 @endsection
 @section('css')
-    <link rel="stylesheet" href="/backend/plugins/select2.min.css" />
+    <link rel="stylesheet" href="/backend/plugins/select2.min.css"/>
 @endsection
 <!-- page content -->
 @section('content')
@@ -26,7 +26,7 @@
             <div class="clearfix"></div>
             @if(Session::has('success_message'))
                 <div class="alert alert-success">
-                    {{ Session::get('success_message') }}
+                    {{ Session::get('success_message') }}<div id="msg"></div>
                 </div>
             @endif
             @if(Session::has('error_message'))
@@ -58,14 +58,14 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <form action="{{route('sales.store')}}" method="post">
+                            <form id="btnSave" action="{{route('sales.store')}}" method="POST">
                                 {{ csrf_field()}}
                                 <div class="form-group">
                                     <label for="product_id">Chose Product</label>
-                                    <select class="form-control js-example-basic-single" id="product_id" name="product_id" data-placeholder="--Search Product--">
-                                        <option value="">--Select Product--</option>
+                                    <select class="form-control js-example-basic-single" id="product_id" name="product_id" data-placeholder="--Search Product--" required>
+                                        <option value="" selected>--Select Product--</option>
                                         @foreach($product as $m)
-                                            <option value="{{$m->id}}" >{{$m->name}} Stock: {{$m->stock}} Price : {{$m->price}}</option>
+                                            <option value="{{$m->id}}">{{$m->name}} Stock:{{$m->stock}} &nbsp;  Price:{{$m->price}}</option>
                                         @endforeach
                                     </select>
                                     <span class="error"><b>
@@ -79,23 +79,23 @@
                                     <input type="number" class="form-control" id="stock" name="stock" placeholder="Stock Available" disabled>
                                     <span class="error"><b>
                                          @if($errors->has('stock'))
-                                              {{$errors->first('stock')}}
+                                                {{$errors->first('stock')}}
                                          @endif</b></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Price*</label>
-                                    <input type="number" class="form-control" name="price" id="price" placeholder="price">
+                                    <input type="number" class="form-control" name="price" id="price" placeholder="price" required>
                                     <span class="error"><b>
                                          @if($errors->has('price'))
-                                              {{$errors->first('price')}}
+                                                {{$errors->first('price')}}
                                          @endif</b></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="sales_quantity">Sales Quantity</label>
-                                    <input type="text" class="form-control" id="sales_quantity" name="sales_quantity" placeholder="Quantity">
+                                    <input type="number" min="1" class="form-control" id="sales_quantity" name="sales_quantity" placeholder="Quantity" required>
                                     <span class="error"><b>
                                          @if($errors->has('sales_quantity'))
-                                              {{$errors->first('sales_quantity')}}
+                                                {{$errors->first('sales_quantity')}}
                                          @endif</b></span>
                                 </div>
                                 <div class="form-group">
@@ -105,31 +105,14 @@
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" name="btnSave" class="btn btn-primary" >Make Sales</button>
+                                    <button type="submit" name="btnSave" class="btn btn-primary">Make
+                                        Sales
+                                    </button>
                                 </div>
-                            </form><br><br>
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="categorytable">
-                                <thead>
-                                <tr>
-                                    <th>S.N.</th>
-                                    <th>Product Name</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php $i=1 ?>
-                                @foreach($sales as $pc)
-                                    <tr>
-                                        <th> {{$i++}}</th>
-                                        <td>{{$pc->product_id}} </td>
-                                        <td>{{$pc->price}} </td>
-                                        <td> {{$pc->quantity}}</td>
-
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                            </form>
+                            <br><br>
+                            <div id="saleslist">
+                            </div>
                             <a href="{{route('sales.printall')}}" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>
@@ -142,28 +125,27 @@
 @section('script')
     <script type="text/javascript" src="/backend/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#categorytable').DataTable();
-        } );
+        });
     </script>
     <script src="/backend/plugins/select2.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".js-example-basic-single").select2();
         });
     </script>
-
     <script type="text/javascript">
-        $(document).ready(function(){
-            $('#product_id').on('change',function() {
+        $(document).ready(function () {
+            $('#product_id').on('change', function () {
                 var prdid = $(this).val();
                 var path = 'getquantity';
                 $.ajax({
-                    url:path,
-                    method:'post',
-                    data:{'product_id' :prdid,'_token':$('input[name=_token]').val()},
-                    dataType:'text',
-                    success:function(resp){
+                    url: path,
+                    method: 'post',
+                    data: {'product_id': prdid, '_token': $('input[name=_token]').val()},
+                    dataType: 'text',
+                    success: function (resp) {
                         console.log(resp);
                         //$('#quantity').empty();
                         $('#stock').val(resp);
@@ -171,21 +153,85 @@
                 });
 
             });
-            $('#product_id').on('change',function(){
+            $('#product_id').on('change', function () {
                 var prdid = $(this).val();
                 var path = 'getprice';
                 $.ajax({
-                    url:path,
-                    method:'post',
-                    data:{'product_id' :prdid,'_token':$('input[name=_token]').val()},
-                    dataType:'text',
-                    success:function(resp){
+                    url: path,
+                    method: 'post',
+                    data: {'product_id': prdid, '_token': $('input[name=_token]').val()},
+                    dataType: 'text',
+                    success: function (resp) {
                         console.log(resp);
                         //$('#price').empty();
                         $('#price').val(resp);
                     }
                 });
             });
+            $('#sales_quantity').keyup(function () {
+                var qty = $(this).val();
+                var price = $('#price').val();
+                var path = 'gettotalprice';
+                $.ajax({
+                    url: path,
+                    method: 'post',
+                    data: {'sales_quantity': qty, 'price': price, '_token': $('input[name=_token]').val()},
+                    dataType: 'text',
+                    success: function (resp) {
+                        console.log('keyed');
+                        //$('#price').empty();
+                        $('#price').val(resp);
+                    }
+                });
+            });
         });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CRF-TOKEN': $('meat[name = "csrf-token"]').attr('content')
+                }
+            });
+            $('#btnSave').on('submit', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var post = $(this).attr('method');
+                var data = $(this).serialize();
+                $.ajax({
+                    url: url,
+                    type: post,
+                    data: data,
+                    success: function (data) {
+                        readsales();
+                        alert(data.success_message);
+                        document.getElementById("btnSave").reset();
+                        //getajaxproduct();
+                    }
+                });
+            });
+        });
+        readsales();
+        //getajaxproduct()
+        function readsales() {
+            $.ajax({
+                type: 'get',
+                url: "{{url('ajaxsales-list')}}",
+                dataType: 'html',
+                success: function (data) {
+                    $('#saleslist').html(data);
+                }
+            })
+        }
+        {{--function getajaxproduct() {--}}
+        {{--$.ajax({--}}
+        {{--type: 'get',--}}
+        {{--url: "{{url('getajaxproduct')}}",--}}
+        {{--dataType: 'html',--}}
+        {{--success: function (data) {--}}
+        {{--$('#getajaxproduct').html(data);--}}
+        {{--}--}}
+        {{--})--}}
+        {{--}--}}
     </script>
 @endsection
