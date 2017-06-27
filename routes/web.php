@@ -95,3 +95,10 @@ Route::delete('/salary-delete/{id}', ['as' => 'salary.delete', 'uses' => 'backen
 Route::get('/salary-edit/{id}/edit', ['as' => 'salary.edit', 'uses' => 'backend\SalaryController@edit']);
 Route::post('/salary-update/{id}', ['as' => 'salary.update', 'uses' => 'backend\SalaryController@update']);
 
+Route::get('/expenses-create',['as'=>'expenses.create', 'uses'=>'backend\ExpensesController@create']);
+Route::get('/expenses-list',['as'=>'expenses.list', 'uses'=>'backend\ExpensesController@index']);
+Route::post('/expenses-save',['as'=>'expenses.store', 'uses'=>'backend\ExpensesController@store']);
+Route::delete('/expenses-delete/{id}', ['as' => 'expenses.delete', 'uses' => 'backend\ExpensesController@destroy']);
+Route::get('/expenses-edit/{id}/edit', ['as' => 'expenses.edit', 'uses' => 'backend\ExpensesController@edit']);
+Route::post('/expenses-update/{id}', ['as' => 'expenses.update', 'uses' => 'backend\ExpensesController@update']);
+

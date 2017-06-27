@@ -87,11 +87,11 @@
                                          @endif</b></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="sallery">Sallery*</label>
-                                    <input type="number" class="form-control" id="sallery" name="sallery" placeholder="Enter sallery Monthly sallery">
+                                    <label for="salary">Sallery*</label>
+                                    <input type="number" class="form-control" id="salary" name="salary" placeholder="Enter Monthly salary">
                                     <span class="error"><b>
-                                         @if($errors->has('sallery'))
-                                                {{$errors->first('sallery')}}
+                                         @if($errors->has('salary'))
+                                                {{$errors->first('salary')}}
                                          @endif</b></span>
                                 </div>
                                 <!-- /.box-body -->
