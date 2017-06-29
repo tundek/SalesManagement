@@ -114,7 +114,7 @@
         <!-- footer content -->
         <footer>
             <div class="pull-right">
-                Copy Right All Reserve <a href="http://www.cheetawebtech.com">cheeta Webtech</a>
+                Copy Right All Reserve <a href="http://www.cheetahwebtech.com">cheeta Webtech</a>
             </div>
             <div class="clearfix"></div>
         </footer>

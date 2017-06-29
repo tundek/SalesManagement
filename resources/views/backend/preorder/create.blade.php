@@ -133,7 +133,7 @@
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" name="btnSave" class="btn btn-primary" >Make Sales</button>
+                                    <button type="submit" name="btnSave" class="btn btn-primary" >Make Order</button>
                                 </div>
                             </form>
                         </div>

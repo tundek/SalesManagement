@@ -130,7 +130,7 @@
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" name="btnCreate" class="btn btn-primary" >Update Product</button>
+                                    <button type="submit" name="btnCreate" class="btn btn-primary" >Update order</button>
                                 </div>
                             </form>
                         </div>

@@ -102,3 +102,9 @@ Route::delete('/expenses-delete/{id}', ['as' => 'expenses.delete', 'uses' => 'ba
 Route::get('/expenses-edit/{id}/edit', ['as' => 'expenses.edit', 'uses' => 'backend\ExpensesController@edit']);
 Route::post('/expenses-update/{id}', ['as' => 'expenses.update', 'uses' => 'backend\ExpensesController@update']);
 
+Route::get('/petty-cash-create',['as'=>'petty-cash.create', 'uses'=>'backend\PettycashController@create']);
+Route::get('/petty-cash-list',['as'=>'petty-cash.list', 'uses'=>'backend\PettycashController@index']);
+Route::post('/petty-cash-save',['as'=>'petty-cash.store', 'uses'=>'backend\PettycashController@store']);
+Route::delete('/petty-cash-delete/{id}', ['as' => 'petty-cash.delete', 'uses' => 'backend\PettycashController@destroy']);
+Route::get('/petty-cash-edit/{id}/edit', ['as' => 'petty-cash.edit', 'uses' => 'backend\PettycashController@edit']);
+Route::post('/petty-cash-update/{id}', ['as' => 'petty-cash.update', 'uses' => 'backend\PettycashController@update']);

@@ -3,8 +3,7 @@
     Expenses Tracking Page
 @endsection
 @section('css')
-    <link rel="stylesheet" href="/backend/plugins/select2.min.css" />
-    <link  href="{{asset('backend/plugins/datepicker/datepicker.css')}}" rel="stylesheet">
+
 @endsection
 <!-- page content -->
 @section('content')
@@ -39,7 +38,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Expenses Tracking</h2>
+                            <h2>Edit Expenses Tracking</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -83,7 +82,7 @@
                                     <span class="error"><b>
                                          @if($errors->has('totalamount'))
                                                 {{$errors->first('totalamount')}}
-                                            @endif</b></span>
+                                         @endif</b></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="paidamount">Paid Amount*</label>
@@ -91,7 +90,7 @@
                                     <span class="error"><b>
                                          @if($errors->has('paidamount'))
                                                 {{$errors->first('paidamount')}}
-                                            @endif</b></span>
+                                         @endif</b></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="product_name">Product Name*</label>
@@ -99,11 +98,11 @@
                                     <span class="error"><b>
                                          @if($errors->has('product_name'))
                                                 {{$errors->first('product_name')}}
-                                            @endif</b></span>
+                                         @endif</b></span>
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" name="btnSave" class="btn btn-primary" >Make Purchase</button>
+                                    <button type="submit" name="btnSave" class="btn btn-primary" >Expenses Update</button>
                                 </div>
                             </form>
                         </div>
@@ -115,41 +114,5 @@
     <!-- /page content -->
 @endsection
 @section('script')
-    <script src="backend/plugins/datepicker/datepicker.js"></script>
-    <script type="text/javascript">
-        $('[data-toggle="start"]').datepicker({
-            format: 'yyyy-mm-dd'
-        });
 
-        $('[data-toggle="end"]').datepicker({
-            format: 'yyyy-mm-dd'
-        });
-    </script>
-    <script src="/backend/plugins/select2.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $(".js-example-basic-single").select2();
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#product_id').on('change',function(){
-                var prdid = $(this).val();
-                var path = 'getprice';
-                $.ajax({
-                    url:path,
-                    method:'post',
-                    data:{'product_id' :prdid,'_token':$('input[name=_token]').val()},
-                    dataType:'text',
-                    success:function(resp){
-                        console.log(resp);
-                        //$('#price').empty();
-                        $('#price').val(resp);
-                    }
-                });
-            });
-
-        });
-    </script>
 @endsection

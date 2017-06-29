@@ -18,7 +18,7 @@ class CreateSalariesTable extends Migration
             $table->integer('staff_id')->unsigned();
             $table->foreign('staff_id')->references('id')->on('staffs')->onUpdate('cascade')->onDelete('cascade');
             $table->string('paid_date');
-            $table->string('paid_amount');
+            $table->double('paid_amount');
             $table->string('created_by', 100);
             $table->foreign('created_by')->references('username')->on('users');
             $table->string('modified_by', 100)->nullable();

@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    Staff Details Edit Page
+     Edit Page
 @endsection
 @section('css')
 
@@ -23,7 +23,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="clearfix"></div>
             @if(Session::has('success_message'))
                 <div class="alert alert-success">
@@ -104,7 +103,6 @@
                                         <input type="radio" name="status" value="1" id="Active" ><label for="Active"> Working</label>
                                         <input type="radio" name="status" id="deactive" value="0" checked=""><label for="deactive">Leave</label>
                                     @endif
-
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">

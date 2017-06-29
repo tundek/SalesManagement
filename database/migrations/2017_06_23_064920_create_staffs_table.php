@@ -18,7 +18,7 @@ class CreateStaffsTable extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('designation');
-            $table->string('salary');
+            $table->double('salary');
             $table->boolean('status')->default(1);
             $table->string('created_by', 100);
             $table->foreign('created_by')->references('username')->on('users');

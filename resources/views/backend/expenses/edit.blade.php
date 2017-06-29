@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    Product Edit Page
+     Edit Expenses Tracking Page
 @endsection
 @section('css')
 
@@ -11,19 +11,18 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Product Management </h3>
+                    <h3>Expenses Management</h3>
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 75px;">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style=" padding-left: 120px;">
                             <div class="input-group">
-                                <a href="{{route('product.list')}}" class="btn btn-success">View Product</a>
+                                <a href="{{route('expenses.list')}}" class="btn btn-success"> View expenses</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="clearfix"></div>
             @if(Session::has('success_message'))
                 <div class="alert alert-success">
@@ -39,13 +38,12 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Edit Product</h2>
+                            <h2> Edit Expenses Tracking</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                       aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="#">Settings 1</a>
                                         </li>
@@ -59,78 +57,67 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <form action="{{route('product.update',$product->id)}}" method="post">
+                            <form action="{{route('expenses.update',$expenses->id)}}" method="post">
                                 {{ csrf_field()}}
                                 <div class="form-group">
-                                    <label for="productcategory_id">Chose ProductCategory</label>
-                                    <select class="form-control" id="productcategory_id" name="productcategory_id">
-                                        <option value="">--Select Productcategory--</option>
-                                        @foreach($productcategory as $d)
-                                            @if($d->id == $product->productcategory_id)
-                                                <option value="{{$d->id}}" selected="">{{$d->name}}</option>
-                                            @else
-                                                <option value="{{$d->id}}">{{$d->name}}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
+                                    <label for="expenses_name">Expenses Name</label>
+                                    <input type="text" value="{{$expenses->expenses_name}}" class="form-control" name="expenses_name" id="expenses_name" placeholder="Enter Expenses Name eg;- rent paid electricity">
                                     <span class="error"><b>
-                                       @if($errors->has('productcategory_id'))
-                                                {{$errors->first('productcategory_id')}}
-                                            @endif</b>
-                                    </span>
+                                         @if($errors->has('expenses_name'))
+                                              {{$errors->first('expenses_name')}}
+                                         @endif</b></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Name*</label>
-                                    <input type="text" value="{{$product->name}}" class="form-control" id="name" name="name"
-                                           placeholder="Enter name">
+                                    <label for="party_name">Party Name</label>
+                                    <input type="text" class="form-control" value="{{$expenses->party_name}}" id="party_name" name="party_name" placeholder="Enter party_name">
                                     <span class="error"><b>
-                                           @if($errors->has('name'))
-                                                {{$errors->first('name')}}
-                                            @endif</b>
-                                     </span>
+                                         @if($errors->has('party_name'))
+                                              {{$errors->first('party_name')}}
+                                         @endif</b></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="slug">Slug*</label>
-                                    <input type="text" value="{{$product->slug}}" class="form-control" id="slug" name="slug"
-                                           placeholder="Enter slug">
+                                <label for="totalamount">Total Amount*</label>
+                                    <input type="number" class="form-control" value="{{$expenses->totalamount}}" name="totalamount" id="totalamount" placeholder="Enter totalamount">
                                     <span class="error"><b>
-                                            @if($errors->has('slug'))
-                                                {{$errors->first('slug')}}
-                                            @endif</b>
-                                         </span>
+                                         @if($errors->has('totalamount'))
+                                                {{$errors->first('totalamount')}}
+                                         @endif</b></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="quantity">Quantity*</label>
-                                    <input type="number" value="{{$product->quantity}}" class="form-control" id="quantity" name="quantity"
-                                           placeholder="Enter quantity">
+                                    <label for="paidamount">Paid Amount*</label>
+                                    <input type="number" class="form-control" value="{{$expenses->paidamount}}" name="paidamount" id="paidamount" placeholder="Enter paidamount">
                                     <span class="error"><b>
-                                         @if($errors->has('quantity'))
-                                                {{$errors->first('quantity')}}
-                                            @endif</b></span>
+                                         @if($errors->has('paidamount'))
+                                                {{$errors->first('paidamount')}}
+                                         @endif</b></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="price">Price*</label>
-                                    <input type="number" value="{{$product->price}}" class="form-control" id="price" name="price"
-                                           placeholder="Enter price">
+                                    <label for="product_name">Product Name*</label>
+                                    <input type="text" class="form-control" name="product_name" value="{{$expenses->product_name}}" id="product_name" placeholder="Enter product_name">
                                     <span class="error"><b>
-                                         @if($errors->has('price'))
-                                                {{$errors->first('price')}}
-                                            @endif</b></span>
+                                         @if($errors->has('product_name'))
+                                                {{$errors->first('product_name')}}
+                                         @endif</b></span>
                                 </div>
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    @if($product->status == 1)
-                                        <input type="radio" name="status" value="1" id="Active" checked=""><label for="Active"> Active</label>
-                                        <input type="radio" name="status" id="deactive" value="0"><label for="deactive">DeActive</label>
-                                    @else
-                                        <input type="radio" name="status" value="1" id="Active" ><label for="Active"> Active</label>
-                                        <input type="radio" name="status" id="deactive" value="0" checked=""><label for="deactive">DeActive</label>
-                                    @endif
-
+                                <div class="input-group">
+                                   <span class="input-group-btn">
+                                     <button type="button" class="btn btn-danger btn-number" data-type="minus"
+                                             data-field="quant[2]">
+                                        <span class="glyphicon glyphicon-minus"></span>
+                                     </button>
+                                   </span>
+                                    <input type="text" name="quant[2]" class="form-control input-number" value="5"
+                                           min="1" max="100">
+                                    <span class="input-group-btn">
+                                       <button type="button" class="btn btn-success btn-number" data-type="plus"
+                                               data-field="quant[2]">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                   </button>
+                                 </span>
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" name="btnCreate" class="btn btn-primary" >Update Product</button>
+                                    <button type="submit" name="btnSave" class="btn btn-primary" >Make Purchase</button>
                                 </div>
                             </form>
                         </div>
@@ -141,19 +128,86 @@
     </div>
     <!-- /page content -->
 @endsection
-
 @section('script')
-    <script src="/backend/plugins/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            var $foo = $('#name');
-            var $bar = $('#slug');
-            function onChange() {
-                $bar.val($foo.val().replace(/\s+/g, '-').toLowerCase());
-            };
-            $('#name')
-                .change(onChange)
-                .keyup(onChange);
+<script>
+    //plugin bootstrap minus and plus
+    //http://jsfiddle.net/laelitenetwork/puJ6G/
+    $( document ).ready(function() {
+        $('.btn-number').click(function(e){
+            e.preventDefault();
+
+            var fieldName = $(this).attr('data-field');
+            var type      = $(this).attr('data-type');
+            var input = $("input[name='"+fieldName+"']");
+            var currentVal = parseInt(input.val());
+            if (!isNaN(currentVal)) {
+                if(type == 'minus') {
+                    var minValue = parseInt(input.attr('min'));
+                    if(!minValue) minValue = 1;
+                    if(currentVal > minValue) {
+                        input.val(currentVal - 1).change();
+                    }
+                    if(parseInt(input.val()) == minValue) {
+                        $(this).attr('disabled', true);
+                    }
+
+                } else if(type == 'plus') {
+                    var maxValue = parseInt(input.attr('max'));
+                    if(!maxValue) maxValue = 9999999999999;
+                    if(currentVal < maxValue) {
+                        input.val(currentVal + 1).change();
+                    }
+                    if(parseInt(input.val()) == maxValue) {
+                        $(this).attr('disabled', true);
+                    }
+
+                }
+            } else {
+                input.val(0);
+            }
         });
-    </script>
+        $('.input-number').focusin(function(){
+            $(this).data('oldValue', $(this).val());
+        });
+        $('.input-number').change(function() {
+
+            var minValue =  parseInt($(this).attr('min'));
+            var maxValue =  parseInt($(this).attr('max'));
+            if(!minValue) minValue = 1;
+            if(!maxValue) maxValue = 9999999999999;
+            var valueCurrent = parseInt($(this).val());
+
+            var name = $(this).attr('name');
+            if(valueCurrent >= minValue) {
+                $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+            } else {
+                alert('Sorry, the minimum value was reached');
+                $(this).val($(this).data('oldValue'));
+            }
+            if(valueCurrent <= maxValue) {
+                $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+            } else {
+                alert('Sorry, the maximum value was reached');
+                $(this).val($(this).data('oldValue'));
+            }
+
+
+        });
+        $(".input-number").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+                // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
 @endsection

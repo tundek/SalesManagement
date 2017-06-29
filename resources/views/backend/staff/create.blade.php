@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    Staff create Page
+    Staff Create Page
 @endsection
 @section('css')
 

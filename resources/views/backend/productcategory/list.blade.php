@@ -61,7 +61,7 @@
                                 <thead>
                                 <tr>
                                     <th>S.N.</th>
-                                    <th>News Category Name</th>
+                                    <th>Category Name</th>
                                     <th>Slug</th>
                                     <th>Rank</th>
                                     <th>status</th>

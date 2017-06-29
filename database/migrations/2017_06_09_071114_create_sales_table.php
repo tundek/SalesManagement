@@ -18,7 +18,7 @@ class CreateSalesTable extends Migration
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('quantity');
-            $table->integer('price');
+            $table->double('price');
             $table->string('saller_name');
             $table->boolean('sales_status')->default(1);
             $table->boolean('flag')->default(1);

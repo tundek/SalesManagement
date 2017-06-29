@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-   PreOrder Listing Page
+   Expenses Listing Page
 @endsection
 @section('css')
 
@@ -11,13 +11,13 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>PreOrder Management</h3>
+                    <h3>Expenses Management</h3>
                 </div>
                 <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 110px;">
                             <div class="input-group">
-                                <a href="{{route('preorder.create')}}" class="btn btn-success">Make New Order</a>
+                                <a href="{{route('expenses.create')}}" class="btn btn-success">New Expenses</a>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Listing PreOrder Deails</h2>
+                            <h2>Listing Expenses Details</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -61,31 +61,36 @@
                                 <thead>
                                 <tr>
                                     <th>S.N.</th>
-                                    <th>Product Name</th>
-                                    <th>Quantity</th>
+                                    <th>Expenses Name</th>
+                                    <th>Party Name</th>
                                     <th>Total Amount</th>
                                     <th>Paid Amount</th>
                                     <th>Due Amount</th>
-                                    <th>Pick Date</th>
-                                    <th>Customer Name</th>
-                                    <th>Customer Phone</th>
-                                    <th>Message</th>
+                                    <th>Product Name</th>
+                                    <th>Purchase Date</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i = 1 ?>
-                                @foreach($preorder as $pc)
+                                @foreach($expenses as $pc)
                                     <tr>
                                         <th> {{$i++}}</th>
-                                        <td> {{$pc->name}}</td>
-                                        <td> {{$pc->quantity}}</td>
+                                        <td> {{$pc->expenses_name}}</td>
+                                        <td> {{$pc->party_name}}</td>
                                         <td> {{$pc->totalamount}}</td>
                                         <td> {{$pc->paidamount}}</td>
                                         <td> {{$pc->dueamount}}</td>
-                                        <td> {{$pc->order_pick}}</td>
-                                        <td> {{$pc->customer_name}}</td>
-                                        <td> {{$pc->customer_phone}}</td>
-                                        <td> {{$pc->message}}</td>
+                                        <td> {{$pc->product_name}}</td>
+                                        <td> {{$pc->created_at}}</td>
+                                        <td>
+                                            <a href="{{route('expenses.edit',$pc->id)}}" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
+                                            <form action="{{route('expenses.delete' ,$pc->id)}}" method="post">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                {{ csrf_field()}}
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('are you sure to delete?')" ><i class="fa fa-trash-o"></i> Delete</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
