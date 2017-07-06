@@ -42,7 +42,7 @@
             <div class="controls">
                 <div class="main_input_box">
                     <span class="add-on bg_lg"><i class="icon-envelope"></i></span>
-                    <input type="text" name="email" placeholder="Email"/>
+                    <input type="email" name="email" placeholder="Email"/>
                 </div>
                 <span class="error">
                     @if($errors->has('email'))

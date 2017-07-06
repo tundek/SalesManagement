@@ -47,12 +47,14 @@ class ProductController extends Controller
         $this->validate($request, [
             'productcategory_id' => 'required',
             'name' => 'required',
+            'code' => 'required|unique:products',
             'quantity' => 'required',
             'price' => 'required',
         ]);
         $message = Product::create([
             'productcategory_id' => $request->productcategory_id,
             'name' => $request->name,
+            'code' => $request->code,
             'quantity' => $request->quantity,
             'stock' => $request->quantity,
             'price' => $request->price,
@@ -104,12 +106,14 @@ class ProductController extends Controller
         $this->validate($request, [
             'productcategory_id' => 'required',
             'name' => 'required',
+            'code' => 'required',
             'quantity' => 'required',
             'price' => 'required',
         ]);
         $pc = Product::find($id);
         $pc->productcategory_id = $request->productcategory_id;
         $pc->name = $request->name;
+        $pc->code = $request->code;
         $pc->quantity = $request->quantity;
         $pc->price = $request->price;
         $pc->status = $request->status;

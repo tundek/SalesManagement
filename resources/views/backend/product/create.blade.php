@@ -23,7 +23,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="clearfix"></div>
             @if(Session::has('success_message'))
                 <div class="alert alert-success">
@@ -81,6 +80,15 @@
                                     <span class="error"><b>
                                            @if($errors->has('name'))
                                                 {{$errors->first('name')}}
+                                            @endif</b>
+                                     </span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="code">Code*</label>
+                                    <input type="text" class="form-control" id="code" name="code" placeholder="Enter Product code">
+                                    <span class="error"><b>
+                                           @if($errors->has('code'))
+                                                {{$errors->first('code')}}
                                             @endif</b>
                                      </span>
                                 </div>

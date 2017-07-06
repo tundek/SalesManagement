@@ -3,7 +3,7 @@
    Make Sales Listing Page
 @endsection
 @section('css')
-
+    <link  href="{{asset('backend/plugins/datepicker/datepicker.css')}}" rel="stylesheet">
 @endsection
 <!-- page content -->
 @section('content')
@@ -17,14 +17,12 @@
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 50px;">
                             <div class="input-group">
-                                <a href="{{route('sales.printall')}}" class="btn btn-success">Import AllReport</a>
-                            </div>
-                            <div class="input-group">
                                 <a href="{{route('sales.create')}}" class="btn btn-success">Make New Sales</a>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
             <div class="clearfix"></div>
             @if(Session::has('success_message'))
@@ -110,7 +108,20 @@
                                 </tr>
                                 </tfoot>
                             </table>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="row">
+                            <form action="{{route('custom.report')}}" method="post">
+                                {{csrf_field()}}
+                                <div class="col-md-3">
+                                    <input class="form-control" data-toggle="start" type="text" name="start" placeholder="pick Start Date">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" data-toggle="end" type="text" name="end" placeholder="pick End Date">
+                                </div>
+                                <div class="col-md-3">
+                                    <button name="" class="btn btn-info">Import Report</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -119,12 +130,21 @@
     </div>
     <!-- /page content -->
 @endsection
-
 @section('script')
     <script type="text/javascript" src="/backend/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#categorytable').DataTable();
         } );
+    </script>
+    <script src="backend/plugins/datepicker/datepicker.js"></script>
+    <script type="text/javascript">
+        $('[data-toggle="start"]').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+
+        $('[data-toggle="end"]').datepicker({
+            format: 'yyyy-mm-dd'
+        });
     </script>
 @endsection

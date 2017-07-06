@@ -87,12 +87,12 @@
                                         </td>
                                         <td> {{$pc->created_by}}</td>
                                         <td> {{$pc->modified_by}}</td>
-                                        <td><a href="{{route('productcategory.edit',$pc->id)}}" class="btn btn-info"><i class="fa fa-pencil"></i>Edit</a>
+                                        <td><a href="{{route('productcategory.edit',$pc->id)}}" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
 
                                             <form action="{{route('productcategory.delete' ,$pc->id)}}" method="post">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 {{ csrf_field()}}
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('are you sure to delete?')" ><i class="fa fa-trash-o"></i>Delete</button>
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('are you sure to delete?')" ><i class="fa fa-trash-o"></i> Delete</button>
                                             </form>
 
                                         </td>

@@ -31,38 +31,22 @@
             {{ Session::get('error_message') }}
         </div>
     @endif
-    <form class="form-vertical" action="{{route('user.check')}}" method="post">
+    <form class="form-vertical" action="{{route('reset.password.send')}}" method="post">
         {{csrf_field()}}
         <div class="control-group normal_text"><h3><img src="{{asset('images/user.png')}}" height="100" width="100" alt="Logo"/></h3></div>
-        <div class="control-group">
-            <div class="controls">
-                <div class="main_input_box">
-                    <span class="add-on bg_lg"><i class="icon-user"></i></span>
-                    <input type="text" name="username"  placeholder="Username"/>
-                </div>
-                <span class="error">
-                    @if($errors->has('username'))
-                        {{$errors->first('username')}}
-                    @endif
-                </span>
+        <div class="controls">
+            <div class="main_input_box">
+                <span class="add-on bg_lg"><i class="icon-envelope"></i></span>
+                <input type="email" name="email" placeholder="Enter Email" required>
             </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <div class="main_input_box">
-                    <span class="add-on bg_ly"><i class="icon-lock"></i></span>
-                    <input type="password" name="password" placeholder="Password"/>
-                </div>
-                <span class="error">
-                    @if($errors->has('password'))
-                        {{$errors->first('password')}}
-                    @endif
+            <span class="error">
+                    @if($errors->has('email'))
+                    {{$errors->first('email')}}
+                @endif
                 </span>
-            </div>
         </div>
         <div class="form-actions">
-            <span class="pull-left"><a href="{{route('reset.password')}}" class="flip-link btn btn-info">Lost password?</a></span>
-            <span class="pull-right"><button type="submit" class="btn btn-success"> Login</button></span>
+            <span class="pull-right"><button type="submit" class="btn btn-success">Send Code</button></span>
         </div>
     </form>
 </div>

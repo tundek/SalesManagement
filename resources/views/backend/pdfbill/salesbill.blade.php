@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<h2 align="center">Sales Report From {{$start}} To {{$end}}</h2>
+<h2 align="center">Sales Bill</h2>
 <table border="1" align="center" cellpadding="5">
     <thead>
     <tr>
@@ -16,7 +16,6 @@
         <th>Product Name</th>
         <th>Quantity</th>
         <th>Price</th>
-        <th>sales By</th>
         <th>sales Date</th>
     </tr>
     </thead>
@@ -28,7 +27,6 @@
         <td>{{$all->name}}</td>
         <td>{{$all->quantity}}</td>
         <td>{{$all->price}}</td>
-        <td>{{$all->saller_name}}</td>
         <td>{{$all->created_at}}</td>
     </tr>
     @endforeach
@@ -46,7 +44,6 @@
                 Rs. {{$total}}
             @endif
         </td>
-        <td></td>
         <td></td>
     </tr>
     </tbody>

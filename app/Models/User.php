@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+//Notification for Seller
+use App\Notifications\SellerResetPasswordNotification;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -27,7 +30,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    function roles(){
-        return  $this->belongsToMany('App\Models\Role','user_roles');
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new SellerResetPasswordNotification($token));
+    }
+
+    function roles()
+    {
+        return $this->belongsToMany('App\Models\Role', 'user_roles');
     }
 }

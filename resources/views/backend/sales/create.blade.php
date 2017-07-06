@@ -65,7 +65,7 @@
                                     <select class="form-control js-example-basic-single" id="product_id" name="product_id" data-placeholder="--Search Product--" required>
                                         <option value="" selected>--Select Product--</option>
                                         @foreach($product as $m)
-                                            <option value="{{$m->id}}">{{$m->name}} Stock:{{$m->stock}} &nbsp;  Price:{{$m->price}}</option>
+                                            <option value="{{$m->id}}">Code: {{$m->code}} {{$m->name}} Stock:{{$m->stock}} &nbsp;  Price:{{$m->price}}</option>
                                         @endforeach
                                     </select>
                                     <span class="error"><b>

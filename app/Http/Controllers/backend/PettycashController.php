@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\Permission;
 use App\Models\Pettycash;
+use App\Models\Withdraw;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +18,24 @@ class PettycashController extends Controller
     public function index()
     {
         $pettycash = Pettycash::all();
-        return view('backend.pettycash.list', compact('pettycash'));
+        $withdraw = Withdraw::all();
+        $totalcash = 0;
+        if ($pettycash) {
+            foreach ($pettycash as $pt) {
+                $cash = $pt->totalcash;
+                $totalcash += $cash;
+            }
+
+        }
+        $totalwithdraw = 0;
+        if ($withdraw){
+            foreach ($withdraw as $w){
+                $with = $w->totalwithdraw;
+                $totalwithdraw += $with;
+
+            }
+        }
+        return view('backend.pettycash.list', compact('pettycash', 'withdraw','totalcash','totalwithdraw'));
     }
 
     /**
@@ -44,13 +61,11 @@ class PettycashController extends Controller
         ]);
         $message = Pettycash::create([
             'totalcash' => $request->totalcash,
-            'remainingcash' => $request->totalcash,
-            'withdraw' => 0,
             'created_by' => Auth::user()->username,
             'created_at' => date('Y-m-d H:i:s'),
         ]);
         if ($message) {
-            return redirect()->route('petty-cash.list')->with('success_message', 'successfully created ');
+            return redirect()->route('petty-cash.list')->with('success_message', 'successfully Leave');
         } else {
             return redirect()->route('petty-cash.create')->with('error_message', 'Failed To create');
         }
@@ -76,7 +91,7 @@ class PettycashController extends Controller
     public function edit($id)
     {
         $pettycash = Pettycash::find($id);
-        return view('backend.pettycash.edit',compact('pettycash'));
+        return view('backend.pettycash.edit', compact('pettycash'));
     }
 
     /**
@@ -93,7 +108,6 @@ class PettycashController extends Controller
         ]);
         $pettycash = Pettycash::find($id);
         $pettycash->totalcash = $request->totalcash;
-        $pettycash->remainingcash = $request->totalcash;
         $message = $pettycash->update();
         if ($message) {
             return redirect()->route('petty-cash.list')->with('success_message', 'successfully updated');

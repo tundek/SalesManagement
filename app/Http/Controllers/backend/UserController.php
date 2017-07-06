@@ -7,11 +7,13 @@ use App\Models\UserRole;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Session;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +33,7 @@ class UserController extends Controller
     {
         $this->checkpermission('user-register');
         $role = Role::all();
-        return view('backend.user.register',compact('role'));
+        return view('backend.user.register', compact('role'));
     }
 
     /**
@@ -46,7 +48,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'username' => 'required|unique:users|min:5|max:30',
-            'password' => 'required|min:5|max:20',
+            'password' => 'required|min:8|max:20',
             'role' => 'required',
         ]);
         $message = User::create([
@@ -56,13 +58,13 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
             'created_at' => date('Y-m-d H:i:s'),
         ]);
-        if ($message){
-            $status = UserRole::create([
+        if ($message) {
+            UserRole::create([
                 'role_id' => $request->role,
                 'user_id' => $message->id
             ]);
             return redirect()->route('user.login')->with('success_message', 'You are successfully register');
-        }else{
+        } else {
             return redirect()->route('user.register')->with('error_message', 'You can not register ');
         }
     }
@@ -119,8 +121,8 @@ class UserController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt(['username' => $request->get('username'), 'password' => $request->get('password')])) {
-            Auth::user()->last_login =  date('Y-m-d H:i:s');
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            Auth::user()->last_login = date('Y-m-d H:i:s');
             Auth::user()->save();
             return redirect()->route('user.dashboard')->with('success_message', 'You are success fully loged In');
         } else {
@@ -135,4 +137,33 @@ class UserController extends Controller
         return redirect()->route('user.login');
 
     }
+
+    /*
+     * Load view of password change
+     */
+    public function changepassword()
+    {
+        return view('backend.user.changepassword');
+    }
+
+    /*
+     * perform password change action using secure Hash::check function
+     */
+    public function changesave(Request $request)
+    {
+        $this->validate($request, [
+            'oldpassword' => 'required',
+            'newpassword' => 'required|min:8',
+            'confirmpassword' => 'required|same:newpassword'
+        ]);
+        $user = User::find(Auth::user()->id);
+        if (Hash::check($request->oldpassword, $user->password)) {
+            $user->password = bcrypt($request->newpassword);
+            $user->update();
+            return redirect()->back()->with('success_message', 'Successfully Change your Password');
+        } else {
+            return redirect()->back()->with('error_message', 'Your Old password is Wrong');
+        }
+    }
+
 }

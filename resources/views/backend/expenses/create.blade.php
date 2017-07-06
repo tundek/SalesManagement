@@ -102,7 +102,7 @@
                                 </div>
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" name="btnSave" class="btn btn-primary" >Expenses Update</button>
+                                    <button type="submit" name="btnSave" class="btn btn-primary" >Expenses Enty</button>
                                 </div>
                             </form>
                         </div>

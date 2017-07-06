@@ -3,54 +3,51 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\Pettycash;
-use App\Models\Product;
-use App\Models\Productcategory;
-use App\Models\Sale;
 use App\Models\Withdraw;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class WithdrawController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function index()
+    public function gettotalcash()
     {
-        $product = Product::where('stock', '>=', 1)->get();
         $pettycash = Pettycash::all();
-        $withdraw = Withdraw::all();
+
         $totalcash = 0;
         if ($pettycash) {
             foreach ($pettycash as $pt) {
                 $cash = $pt->totalcash;
                 $totalcash += $cash;
             }
+            return $totalcash;
+
         }
+
+    }
+
+    public function gettotalwithdraw()
+    {
+        $withdraw = Withdraw::all();
         $totalwithdraw = 0;
         if ($withdraw) {
             foreach ($withdraw as $w) {
                 $with = $w->totalwithdraw;
                 $totalwithdraw += $with;
-            }
-        }
-        $sales = Sale::all();
-        $totalrevenue = 0;
-        if ($sales) {
-            foreach ($sales as $w) {
-                $with = $w->price;
-                $totalrevenue += $with;
 
             }
+            return $totalwithdraw;
         }
-        $ccategory = Productcategory::all();
-        $cproduct = Product::all();
-        $totalcategory = count($ccategory);
-        $totalproduct = count($cproduct);
-        return view('backend.dashboard.index', compact('product', 'totalcash', 'totalwithdraw','totalrevenue','totalcategory','totalproduct'));
+    }
+
+    public function index()
+    {
+
     }
 
     /**
@@ -58,10 +55,9 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function create()
     {
-
+        return view('backend.pettycash.withdraw');
     }
 
     /**
@@ -72,6 +68,26 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'totalwithdraw' => 'required',
+            'purpose' => 'required'
+        ]);
+        $total = $this->gettotalcash() - $this->gettotalwithdraw();
+        if ($request->totalwithdraw <= $total) {
+            $message = Withdraw::create([
+                'totalwithdraw' => $request->totalwithdraw,
+                'purpose' => $request->purpose,
+                'created_by' => Auth::user()->username,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            if ($message) {
+                return redirect()->route('user.dashboard')->with('success_message', 'successfully Withdraw amount Rs ' . $request->totalwithdraw);
+            } else {
+                return redirect()->route('withdraw-petty-cash.create')->with('error_message', 'Failed To create');
+            }
+        } else {
+            return redirect()->route('user.dashboard')->with('error_message', 'You have no Sufficent Balance');
+        }
 
     }
 
@@ -106,7 +122,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        //
     }
 
     /**

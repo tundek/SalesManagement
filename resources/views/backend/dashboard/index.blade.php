@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-    Sabaoko BaKery Dashboard Page
+    Live Bakery Dashboard Page
 @endsection
 @section('css')
     <link rel="stylesheet" href="/backend/plugins/select2.min.css">
@@ -27,16 +27,8 @@
                 <div class="info-box blue-bg bg-primary" style="text-align: center">
                     <i class="fa fa-money"></i>
                     <div class="count">
-                        <?php $total=0 ?>
-                        @if($pettycash)
-                            @foreach($pettycash as $s)
-                                @php
-                                    $price = $s->remainingcash;
-                                    $total += $price;
-                                @endphp
-                            @endforeach
-                            {{$total}}
-                        @endif
+                        {{$totalcash - $totalwithdraw}}
+                        <a class="btn btn-info" href="{{route('withdraw-petty-cash.create')}}">Pick Cash</a>
                     </div>
                     <div class="title">Current Petty Cash</div>
                 </div><!--/.info-box-->
@@ -45,22 +37,22 @@
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                 <div class="info-box brown-bg bg-info" style="text-align: center">
                     <i class="fa fa-shopping-cart"></i>
-                    <div class="count">20,000</div>
-                    <div class="title">Total Revenue</div>
+                    <div class="count">{{$totalrevenue}}</div>
+                    <div class="title">Total Sales Revenue</div>
                 </div><!--/.info-box-->
             </div><!--/.col-->
 
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                 <div class="info-box dark-bg bg-primary" style="text-align: center">
                     <i class="fa fa-thumbs-o-up"></i>
-                    <div class="count">4</div>
+                    <div class="count">{{$totalcategory}}</div>
                     <div class="title">Total Product Category</div>
                 </div><!--/.info-box-->
             </div><!--/.col-->
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                 <div class="info-box dark-bg bg-info" style="text-align: center">
                     <i class="fa fa-thumbs-o-up"></i>
-                    <div class="count">20</div>
+                    <div class="count">{{$totalproduct}}</div>
                     <div class="title">Total No. of Product</div>
                 </div><!--/.info-box-->
             </div><!--/.col-->
@@ -105,7 +97,7 @@
                                 <select class="form-control js-example-basic-single" id="product_id" name="product_id" data-placeholder="--Search Product--" required>
                                     <option value="" selected>--Select Product--</option>
                                     @foreach($product as $m)
-                                        <option value="{{$m->id}}">{{$m->name}} Stock:{{$m->stock}} &nbsp;  Price:{{$m->price}}</option>
+                                        <option value="{{$m->id}}">Code: {{$m->code}} {{$m->name}} Stock:{{$m->stock}} &nbsp;  Price:{{$m->price}}</option>
                                     @endforeach
                                 </select>
                                 <span class="error"><b>

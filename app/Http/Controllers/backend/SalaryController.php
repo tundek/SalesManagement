@@ -7,6 +7,7 @@ use App\Models\Staff;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class SalaryController extends Controller
 {
@@ -103,5 +104,13 @@ class SalaryController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function getallsalaryreport()
+    {
+        $allsalaryreport = Salary::join('staffs', 'staffs.id', '=', 'salaries.staff_id')
+            ->select('salaries.*', 'staffs.name')
+            ->get();
+        $pdf = PDF::loadview('backend.pdfbill.salary',compact('allsalaryreport'));
+        return $pdf->download('salary.pdf');
     }
 }

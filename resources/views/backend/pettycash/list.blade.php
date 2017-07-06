@@ -91,16 +91,7 @@
                                 <tr>
                                     <td colspan="">Total Leave Cash</td>
                                     <td>
-                                        <?php $total=0 ?>
-                                        @if($pettycash)
-                                            @foreach($pettycash as $s)
-                                                @php
-                                                    $price = $s->totalcash;
-                                                    $total += $price;
-                                                @endphp
-                                            @endforeach
-                                            {{$total}}
-                                        @endif
+                                        {{$totalcash}}
                                     </td>
                                     <td></td>
                                     <td></td>
@@ -109,16 +100,7 @@
                                 <tr>
                                     <td colspan="">Total Remaining Petty Cash</td>
                                     <td>
-                                        <?php $total=0 ?>
-                                        @if($pettycash)
-                                            @foreach($pettycash as $s)
-                                                @php
-                                                    $price = $s->remainingcash;
-                                                    $total += $price;
-                                                @endphp
-                                            @endforeach
-                                            {{$total}}
-                                        @endif
+                                        {{$totalcash - $totalwithdraw}}
                                     </td>
                                     <td></td>
                                     <td></td>
@@ -135,17 +117,19 @@
                                 <thead>
                                 <tr>
                                     <th>S.N.</th>
-                                    <th>WithDraw</th>
+                                    <th>Purpose</th>
+                                    <th>WithDraw Mount</th>
                                     <th>WithDraw By</th>
                                     <th>WithDraw Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=1 ?>
-                                @foreach($pettycash as $pc)
+                                @foreach($withdraw as $pc)
                                     <tr>
                                         <th> {{$i++}}</th>
-                                        <td>{{$pc->withdraw}} </td>
+                                        <td>{{$pc->purpose}} </td>
+                                        <td>{{$pc->totalwithdraw}} </td>
                                         <td>{{$pc->created_by}} </td>
                                         <td>{{$pc->created_at}} </td>
 
@@ -154,9 +138,9 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td colspan="">Total Withdraw</td>
+                                    <td colspan="2">Total Withdraw</td>
                                     <td>
-
+                                       {{$totalwithdraw}}
                                     </td>
                                     <td></td>
                                     <td></td>

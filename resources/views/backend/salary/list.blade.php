@@ -71,10 +71,10 @@
                                 <?php $i=1 ?>
                                 @foreach($salary as $pc)
                                     <tr>
-                                        <th> {{$i++}}</th>
+                                        <th>{{$i++}} </th>
                                         <td>{{$pc->name}} </td>
                                         <td>{{$pc->phone}} </td>
-                                        <td> {{$pc->paid_amount}}</td>
+                                        <td>{{$pc->paid_amount}} </td>
                                         <td>{{$pc->paid_date}} </td>
                                     </tr>
                                 @endforeach
@@ -99,6 +99,7 @@
                                 </tfoot>
                             </table>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{{route('salary.pdf')}}" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>
                 </div>

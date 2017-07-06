@@ -29,7 +29,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="{{route('user.dashboard')}}" class="site_title"><i class="fa fa-user"></i> <span>Sabaiko BaKery</span></a>
+                    <a href="{{route('user.dashboard')}}" class="site_title"><i class="fa fa-user"></i> <span>Live Bakery</span></a>
                 </div>
                 <div class="clearfix"></div>
                 <!-- menu profile quick info -->
@@ -94,7 +94,7 @@
                                 <span class="fa fa-power-off"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href=""> Change Password</a></li>
+                                <li><a href="{{route('change.password')}}"> Change Password</a></li>
                                 <li><a href="{{route('user.logout')}}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </li>
                             </ul>
@@ -114,7 +114,7 @@
         <!-- footer content -->
         <footer>
             <div class="pull-right">
-                Copy Right All Reserve <a href="http://www.cheetahwebtech.com">cheeta Webtech</a>
+                Copy Right All Reserve <a href="http://www.cheetahwebtech.com">CheetahWebtech</a>
             </div>
             <div class="clearfix"></div>
         </footer>

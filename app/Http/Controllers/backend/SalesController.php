@@ -120,9 +120,23 @@ class SalesController extends Controller
 
     public function getallpdf()
     {
-        $report = Sale::all();
-        $pdf = PDF::loadView('backend.pdfbill.allreport', compact('report'));
-        return $pdf->stream('customer.pdf');
+        $report = Sale::join('products', 'products.id', '=', 'sales.product_id')
+            ->select('sales.*', 'products.name')
+            ->get();
+        $pdf = PDF::loadView('backend.pdfbill.salesbill', compact('report'));
+        return $pdf->loadFile('customer.pdf');
+    }
+
+    public function getcustomreport(Request $request)
+    {
+        $start = $request->start;
+        $end = $request->end;
+        $report = Sale::join('products', 'products.id', 'sales.product_id')
+            ->select('sales.*', 'products.name')
+            ->whereBetween('sales.sales_date', [$start, $end])
+            ->get();
+        $pdf = PDF::loadview('backend.pdfbill.allreport', compact('report', 'start', 'end'));
+        return $pdf->download('salesreport.pdf');
     }
 
 }

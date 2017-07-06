@@ -99,25 +99,30 @@
                                                 {{$errors->first('product_name')}}
                                          @endif</b></span>
                                 </div>
-                                <div class="input-group">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="input-group">
                                    <span class="input-group-btn">
                                      <button type="button" class="btn btn-danger btn-number" data-type="minus"
                                              data-field="quant[2]">
                                         <span class="glyphicon glyphicon-minus"></span>
                                      </button>
                                    </span>
-                                    <input type="text" name="quant[2]" class="form-control input-number" value="5"
-                                           min="1" max="100">
-                                    <span class="input-group-btn">
+                                            <input type="text" name="quant[2]" class="form-control input-number" value="5"
+                                                   min="1" max="100">
+                                            <span class="input-group-btn">
                                        <button type="button" class="btn btn-success btn-number" data-type="plus"
                                                data-field="quant[2]">
                                     <span class="glyphicon glyphicon-plus"></span>
                                    </button>
                                  </span>
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <!-- /.box-body -->
                                 <div class="box-footer">
-                                    <button type="submit" name="btnSave" class="btn btn-primary" >Make Purchase</button>
+                                    <button type="submit" name="btnSave" class="btn btn-primary" >Update Expenses</button>
                                 </div>
                             </form>
                         </div>

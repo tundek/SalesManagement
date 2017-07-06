@@ -63,6 +63,7 @@
                                     <th>S.N.</th>
                                     <th>Category Name</th>
                                     <th>Name</th>
+                                    <th>Code</th>
                                     <th>Quantity</th>
                                     <th>Price</th>
                                     <th>stock</th>
@@ -79,6 +80,7 @@
                                         <th> {{$i++}}</th>
                                         <td>{{$pc->n}} </td>
                                         <td>{{$pc->name}} </td>
+                                        <td>{{$pc->code}} </td>
                                         <td> {{$pc->quantity}}</td>
                                         <td> {{$pc->price}}</td>
                                         <td> {{$pc->stock}}</td>

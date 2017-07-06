@@ -81,8 +81,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Name*</label>
-                                    <input type="text" value="{{$product->name}}" class="form-control" id="name" name="name"
-                                           placeholder="Enter name">
+                                    <input type="text" value="{{$product->name}}" class="form-control" id="name" name="name" placeholder="Enter name">
                                     <span class="error"><b>
                                            @if($errors->has('name'))
                                                 {{$errors->first('name')}}
@@ -90,9 +89,17 @@
                                      </span>
                                 </div>
                                 <div class="form-group">
+                                    <label for="code">Code*</label>
+                                    <input type="text" value="{{$product->code}}" class="form-control" id="code" name="code" placeholder="Enter Product code">
+                                    <span class="error"><b>
+                                           @if($errors->has('code'))
+                                                {{$errors->first('code')}}
+                                            @endif</b>
+                                     </span>
+                                </div>
+                                <div class="form-group">
                                     <label for="quantity">Quantity*</label>
-                                    <input type="number" value="{{$product->quantity}}" class="form-control" id="quantity" name="quantity"
-                                           placeholder="Enter quantity">
+                                    <input type="number" value="{{$product->quantity}}" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity">
                                     <span class="error"><b>
                                          @if($errors->has('quantity'))
                                                 {{$errors->first('quantity')}}
@@ -100,8 +107,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Price*</label>
-                                    <input type="number" value="{{$product->price}}" class="form-control" id="price" name="price"
-                                           placeholder="Enter price">
+                                    <input type="number" value="{{$product->price}}" class="form-control" id="price" name="price" placeholder="Enter price">
                                     <span class="error"><b>
                                          @if($errors->has('price'))
                                                 {{$errors->first('price')}}

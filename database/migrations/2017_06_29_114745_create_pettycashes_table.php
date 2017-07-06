@@ -16,8 +16,6 @@ class CreatePettycashesTable extends Migration
         Schema::create('pettycashes', function (Blueprint $table) {
             $table->increments('id');
             $table->double('totalcash');
-            $table->double('remainingcash');
-            $table->double('withdraw');
             $table->string('created_by', 100);
             $table->foreign('created_by')->references('username')->on('users');
             $table->string('modified_by', 100)->nullable();
