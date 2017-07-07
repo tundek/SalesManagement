@@ -25,9 +25,9 @@ class ForgotPasswordController extends Controller
         ]);
         $user = User::whereEmail($request->email)->first();
         if (count($user) == 0) {
-            return redirect()->back()->with('success_message','Reset link is Send to Your Email');
+            return redirect()->back()->with('success_message', 'Reset link is Send to Your Email');
         }
-        $reminder = Reminder::exit() ?:Reminder::create($user);
+        $reminder = Reminder::exit() ?: Reminder::create($user);
         dd($reminder);
 
     }

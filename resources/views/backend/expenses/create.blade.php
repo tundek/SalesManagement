@@ -14,10 +14,18 @@
                     <h3>Expenses Management</h3>
                 </div>
                 <div class="title_right">
-                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search" style="padding-left: 120px;">
-                            <div class="input-group">
-                                <a href="{{route('expenses.list')}}" class="btn btn-success">View expenses</a>
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group top_search">
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <a href="{{route('expensesheading.create')}}" class="btn btn-success">Add Heading</a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <a href="{{route('expenses.list')}}" class="btn btn-success">View expenses</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -61,12 +69,18 @@
                             <form action="{{route('expenses.store')}}" method="post">
                                 {{ csrf_field()}}
                                 <div class="form-group">
-                                    <label for="expenses_name">Expenses Name</label>
-                                    <input type="text" class="form-control" name="expenses_name" id="expenses_name" placeholder="Enter Expenses Name eg;- rent paid electricity">
+                                    <label for="expenses_name">Chose Expenses Name</label>
+                                    <select class="form-control js-example-basic-single" id="expenses_name" name="expenses_name" data-placeholder="--Search Heading--" required>
+                                        <option value="">--Select Expenses Type--</option>
+                                        @foreach($expensesheading as $e)
+                                        <option value="{{$e->name}}">{{$e->name}}</option>
+                                        @endforeach
+                                    </select>
                                     <span class="error"><b>
-                                         @if($errors->has('expenses_name'))
-                                              {{$errors->first('expenses_name')}}
-                                         @endif</b></span>
+                                       @if($errors->has('expenses_name'))
+                                                {{$errors->first('expenses_name')}}
+                                            @endif</b>
+                                    </span>
                                 </div>
                                 <div class="form-group">
                                     <label for="party_name">Party Name</label>

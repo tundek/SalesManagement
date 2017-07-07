@@ -23,7 +23,7 @@ Route::get('/change-password', ['as' => 'change.password', 'uses' => 'backend\Us
 Route::post('/change-save', ['as' => 'change.save', 'uses' => 'backend\UserController@changesave']);
 Route::get('/reset-password', ['as' => 'reset.password', 'uses' => 'backend\ForgotPasswordController@showLinkRequestForm']);
 Route::post('password/email', ['as' => 'reset.password.send', 'uses' => 'backend\ForgotPasswordController@sendResetLinkEmail']);
-Route::get('password/reset/{token}', ['as' => 'reset.password.token' ,'uses' => 'backend\ResetPasswordController@showResetForm']);
+Route::get('password/reset/{token}', ['as' => 'reset.password.token', 'uses' => 'backend\ResetPasswordController@showResetForm']);
 Route::post('password/reset', ['as' => 'reset.password.save', 'uses' => 'backend\ResetPasswordController@reset']);
 
 Route::get('/', ['as' => 'user.login', 'uses' => 'backend\UserController@index']);
@@ -84,9 +84,9 @@ Route::post('/getproductname', ['as' => 'sales.getproductname', 'uses' => 'backe
 Route::get('/preorder-create', ['as' => 'preorder.create', 'uses' => 'backend\PreorderController@create']);
 Route::get('/preorder-list', ['as' => 'preorder.list', 'uses' => 'backend\PreorderController@index']);
 Route::post('/preorder-save', ['as' => 'preorder.store', 'uses' => 'backend\PreorderController@store']);
-Route::delete('/preorder-delete/{id}', ['as' => 'preorder.delete', 'uses' => 'backend\PreorderController@destroy']);
-Route::get('/preorder-edit/{id}/edit', ['as' => 'preorder.edit', 'uses' => 'backend\PreorderController@edit']);
-Route::post('/preorder-update/{id}', ['as' => 'preorder.update', 'uses' => 'backend\PreorderController@update']);
+//Route::delete('/preorder-delete/{id}', ['as' => 'preorder.delete', 'uses' => 'backend\PreorderController@destroy']);
+//Route::get('/preorder-edit/{id}/edit', ['as' => 'preorder.edit', 'uses' => 'backend\PreorderController@edit']);
+Route::get('/preorder-update/{id}', ['as' => 'preorder.update', 'uses' => 'backend\PreorderController@update']);
 
 Route::get('/staff-create', ['as' => 'staff.create', 'uses' => 'backend\StaffController@create']);
 Route::get('/staff-list', ['as' => 'staff.list', 'uses' => 'backend\StaffController@index']);
@@ -109,6 +109,8 @@ Route::post('/expenses-save', ['as' => 'expenses.store', 'uses' => 'backend\Expe
 Route::delete('/expenses-delete/{id}', ['as' => 'expenses.delete', 'uses' => 'backend\ExpensesController@destroy']);
 Route::get('/expenses-edit/{id}/edit', ['as' => 'expenses.edit', 'uses' => 'backend\ExpensesController@edit']);
 Route::post('/expenses-update/{id}', ['as' => 'expenses.update', 'uses' => 'backend\ExpensesController@update']);
+Route::get('/expensesheading-create', ['as' => 'expensesheading.create', 'uses' => 'backend\ExpensesController@expensesheadingcreate']);
+Route::post('/expensesheading-save', ['as' => 'expensesheading.store', 'uses' => 'backend\ExpensesController@expensesheadingstore']);
 
 Route::get('/petty-cash-create', ['as' => 'petty-cash.create', 'uses' => 'backend\PettycashController@create']);
 Route::get('/petty-cash-list', ['as' => 'petty-cash.list', 'uses' => 'backend\PettycashController@index']);

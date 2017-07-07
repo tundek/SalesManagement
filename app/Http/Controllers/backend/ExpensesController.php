@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\Expense;
+use App\Models\Expensestitle;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class ExpensesController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::all();
+        $expenses = Expense::orderBy('created_at', 'DEC')->get();
         return view('backend.expenses.list', compact('expenses'));
     }
 
@@ -27,7 +28,8 @@ class ExpensesController extends Controller
      */
     public function create()
     {
-        return view('backend.expenses.create');
+        $expensesheading = Expensestitle::orderBy('created_at', 'DEC')->get();
+        return view('backend.expenses.create', compact('expensesheading'));
     }
 
     /**
@@ -136,6 +138,26 @@ class ExpensesController extends Controller
             } else {
                 return redirect()->route('expenses.update')->with('error_message', 'failed to  Delete');
             }
+        }
+    }
+
+    public function expensesheadingcreate()
+    {
+        return view('backend.expenses.createtitel');
+    }
+
+    public function expensesheadingstore(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+        $message = Expensestitle::create([
+            'name' => $request->name,
+        ]);
+        if ($message) {
+            return back()->with('success_message', 'Success Fully created');
+        } else {
+            return back()->with('error_message', 'Failed To create');
         }
     }
 }

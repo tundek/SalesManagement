@@ -25,6 +25,7 @@ class CreatePreordersTable extends Migration
             $table->string('customer_phone');
             $table->datetime('order_pick');
             $table->string('message');
+            $table->boolean('delivered_status')->default(0);
             $table->string('created_by', 100);
             $table->foreign('created_by')->references('username')->on('users');
             $table->string('modified_by', 100)->nullable();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\Preorder;
 use App\Models\Product;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +18,15 @@ class PreorderController extends Controller
      */
     public function index()
     {
-        $preorder = Preorder::join('products','products.id','=','preorders.product_id')
-        ->select('preorders.*','products.name')
-        ->get();
-        return view('backend.preorder.list', compact('preorder'));
+        $preorder = Preorder::join('products', 'products.id', '=', 'preorders.product_id')
+            ->select('preorders.*', 'products.name')
+            ->where('preorders.delivered_status', '=', 0)
+            ->get();
+        $finalpreorder = Preorder::join('products', 'products.id', '=', 'preorders.product_id')
+            ->select('preorders.*', 'products.name')
+            ->where('preorders.delivered_status', '=', 1)
+            ->get();
+        return view('backend.preorder.list', compact('preorder', 'finalpreorder'));
     }
 
     /**
@@ -105,7 +111,19 @@ class PreorderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $preorder = Preorder::find($id);
+        $preorder->delivered_status = 1;
+        if ($preorder->update()) {
+            $sales = new Sale();
+            $sales->product_id = $preorder->product_id;
+            $sales->quantity = $preorder->quantity;
+            $sales->price = $preorder->totalamount;
+            $sales->sales_status = 1;
+            $sales->saller_name = Auth::user()->username;
+            $sales->sales_date = date('Y-m-d H:i:s');
+            $sales->save();
+        }
+        return redirect()->back()->with('success_message', 'successfully Delivered and Register into Sales');
     }
 
     /**

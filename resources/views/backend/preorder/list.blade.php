@@ -38,7 +38,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Listing PreOrder Deails</h2>
+                            <h2>Current PreOrder Deails</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -70,6 +70,7 @@
                                     <th>Customer Name</th>
                                     <th>Customer Phone</th>
                                     <th>Message</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -86,12 +87,46 @@
                                         <td> {{$pc->customer_name}}</td>
                                         <td> {{$pc->customer_phone}}</td>
                                         <td> {{$pc->message}}</td>
+                                        <td> <a href="{{route('preorder.update',$pc->id)}}" class="btn btn-info" onclick="return confirm('Does HE/SHE paid Due Amount?')"> Delivered</a> </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="{{route('sales.printall')}}" class="btn btn-info"><i class="fa fa-print"></i> Print</a>
+                        </div>
+                        <br>
+                        <h2>Delivered preorder details</h2>
+                        <hr>
+                        <div class="x_content">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="categorytable">
+                                <thead>
+                                <tr>
+                                    <th>S.N.</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Total Amount</th>
+
+                                    <th>Pick Date</th>
+                                    <th>Customer Name</th>
+                                    <th>Customer Phone</th>
+                                    <th>Message</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $i = 1 ?>
+                                @foreach($finalpreorder as $pc)
+                                    <tr>
+                                        <th> {{$i++}}</th>
+                                        <td> {{$pc->name}}</td>
+                                        <td> {{$pc->quantity}}</td>
+                                        <td> {{$pc->totalamount}}</td>
+                                        <td> {{$pc->order_pick}}</td>
+                                        <td> {{$pc->customer_name}}</td>
+                                        <td> {{$pc->customer_phone}}</td>
+                                        <td> {{$pc->message}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

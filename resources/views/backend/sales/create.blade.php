@@ -147,7 +147,7 @@
                     dataType: 'text',
                     success: function (resp) {
                         console.log(resp);
-                        //$('#quantity').empty();
+                        $('#quantity').empty();
                         $('#stock').val(resp);
                     }
                 });
@@ -163,27 +163,27 @@
                     dataType: 'text',
                     success: function (resp) {
                         console.log(resp);
-                        //$('#price').empty();
+                        $('#price').empty();
                         $('#price').val(resp);
                     }
                 });
             });
-            $('#sales_quantity').keyup(function () {
-                var qty = $(this).val();
-                var price = $('#price').val();
-                var path = 'gettotalprice';
-                $.ajax({
-                    url: path,
-                    method: 'post',
-                    data: {'sales_quantity': qty, 'price': price, '_token': $('input[name=_token]').val()},
-                    dataType: 'text',
-                    success: function (resp) {
-                        console.log('keyed');
-                        //$('#price').empty();
-                        $('#price').val(resp);
-                    }
-                });
-            });
+//            $('#sales_quantity').keyup(function () {
+//                var qty = $(this).val();
+//                var price = $('#price').val();
+//                var path = 'gettotalprice';
+//                $.ajax({
+//                    url: path,
+//                    method: 'post',
+//                    data: {'sales_quantity': qty, 'price': price, '_token': $('input[name=_token]').val()},
+//                    dataType: 'text',
+//                    success: function (resp) {
+//                        console.log('keyed');
+//                        //$('#price').empty();
+//                        $('#price').val(resp);
+//                    }
+//                });
+//            });
         });
     </script>
     <script>
@@ -206,13 +206,11 @@
                         readsales();
                         alert(data.success_message);
                         document.getElementById("btnSave").reset();
-                        //getajaxproduct();
                     }
                 });
             });
         });
         readsales();
-        //getajaxproduct()
         function readsales() {
             $.ajax({
                 type: 'get',
@@ -223,15 +221,6 @@
                 }
             })
         }
-        {{--function getajaxproduct() {--}}
-        {{--$.ajax({--}}
-        {{--type: 'get',--}}
-        {{--url: "{{url('getajaxproduct')}}",--}}
-        {{--dataType: 'html',--}}
-        {{--success: function (data) {--}}
-        {{--$('#getajaxproduct').html(data);--}}
-        {{--}--}}
-        {{--})--}}
-        {{--}--}}
+
     </script>
 @endsection

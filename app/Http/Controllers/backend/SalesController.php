@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\Product;
 use App\Models\Sale;
+use App\Models\Salescart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +16,6 @@ class SalesController extends Controller
     public function create()
     {
         $product = Product::where('stock', '>=', 1)->get();
-        $sales = Sale::join('products', 'products.id', '=', 'sales.product_id')
-            ->select('sales.*', 'products.name')
-            ->where('flag', '=', 1)
-            ->get();
         return view('backend.sales.create', compact('product', 'sales'));
     }
 
@@ -30,10 +27,10 @@ class SalesController extends Controller
             'sales_quantity' => 'required',
         ]);
         if ($request->ajax()) {
-            $sales = new Sale();
+            $sales = new Salescart();
             $sales->product_id = $request->product_id;
             $sales->quantity = $request->sales_quantity;
-            $sales->price = $request->price;
+            $sales->price = $request->price * $request->sales_quantity;
             $sales->sales_status = $request->sales_status;
             $sales->saller_name = Auth::user()->username;
             $sales->sales_date = date('Y-m-d H:i:s');
@@ -47,7 +44,6 @@ class SalesController extends Controller
         } else {
             return response(['success_message' => 'Filed To Make sales']);
         }
-
     }
 
     public function index()
@@ -55,40 +51,32 @@ class SalesController extends Controller
         $sales = Sale::join('products', 'products.id', '=', 'sales.product_id')
             ->select('sales.*', 'products.name')
             ->orderBy('sales.created_at', 'DEC')
-            ->where('sales.flag', '=', 1)
             ->get();
         return view('backend.sales.list', compact('sales'));
     }
 
     public function ajaxlist()
     {
-        $sales = Sale::join('products', 'products.id', '=', 'sales.product_id')
-            ->select('sales.*', 'products.name')
-            ->orderBy('sales.created_at', 'DEC')
-            ->where('sales.flag', '=', 1)
+        $sales = Salescart::join('products', 'products.id', '=', 'salescarts.product_id')
+            ->select('salescarts.*', 'products.name')
+            ->orderBy('salescarts.created_at', 'DEC')
             ->get();
         return view('backend.sales.ajaxlist', compact('sales'));
     }
 
-//    public function getajaxproduct()
+//    public function getproduct()
 //    {
-//        $product = Product::where('stock', '>=', 1)->get();
-//        return view('backend.sales.getajaxproduct', compact('product'));
+//        $product = Product::where('productcategory_id', $_POST['id'])->get();
+//        if (count($product) > 0) {
+//            $opt = "<option>---Select Product---</option>";
+//            foreach ($product as $p) {
+//                $opt .= "<option value='$p->id'>$p->name</option>";
+//            }
+//        } else {
+//            $opt = "<option>No Product Available for This Category</option>";
+//        }
+//        echo $opt;
 //    }
-
-    public function getproduct()
-    {
-        $product = Product::where('productcategory_id', $_POST['id'])->get();
-        if (count($product) > 0) {
-            $opt = "<option>---Select Product---</option>";
-            foreach ($product as $p) {
-                $opt .= "<option value='$p->id'>$p->name</option>";
-            }
-        } else {
-            $opt = "<option>No Product Available for This Category</option>";
-        }
-        echo $opt;
-    }
 
     public function getquantity(Request $request)
     {
@@ -103,14 +91,6 @@ class SalesController extends Controller
         echo $product[0]->price;
     }
 
-    public function gettotalprice(Request $request)
-    {
-        $quantity = $request->sales_quantity;
-        $price = $request->price;
-        $total = $quantity * $price;
-        echo $total;
-    }
-
     public function getproductname(Request $request)
     {
         $product = Product::where('id', $request->product_id)->get();
@@ -120,11 +100,11 @@ class SalesController extends Controller
 
     public function getallpdf()
     {
-        $report = Sale::join('products', 'products.id', '=', 'sales.product_id')
-            ->select('sales.*', 'products.name')
+        $report = Salescart::join('products', 'products.id', '=', 'salescarts.product_id')
+            ->select('salescarts.*', 'products.name')
             ->get();
         $pdf = PDF::loadView('backend.pdfbill.salesbill', compact('report'));
-        return $pdf->loadFile('customer.pdf');
+        return $pdf->download('customer.pdf');
     }
 
     public function getcustomreport(Request $request)

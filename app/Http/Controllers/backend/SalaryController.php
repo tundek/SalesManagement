@@ -20,6 +20,7 @@ class SalaryController extends Controller
     {
         $salary = Salary::join('staffs', 'staffs.id', '=', 'salaries.staff_id')
             ->select('salaries.*', 'staffs.name', 'staffs.phone')
+            ->orderBy('salaries.created_at', 'DEC')
             ->get();
         return view('backend.salary.list', compact('salary'));
     }
@@ -105,12 +106,13 @@ class SalaryController extends Controller
     {
         //
     }
+
     public function getallsalaryreport()
     {
         $allsalaryreport = Salary::join('staffs', 'staffs.id', '=', 'salaries.staff_id')
             ->select('salaries.*', 'staffs.name')
             ->get();
-        $pdf = PDF::loadview('backend.pdfbill.salary',compact('allsalaryreport'));
+        $pdf = PDF::loadview('backend.pdfbill.salary', compact('allsalaryreport'));
         return $pdf->download('salary.pdf');
     }
 }
